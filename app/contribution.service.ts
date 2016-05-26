@@ -8,20 +8,21 @@ import { Contribution } from './contribution';
 @Injectable()
 export class HeroService {
 
-  private contributionsUrl = '/api/posts';  // URL to web api
-  private askUrl = '/api/posts/ask';
-  private urlUrl = '/api/posts/url';
+  private contributionsUrl = 'http://hackersnews.herokuapp.com/api/posts/';  // URL to web api
+  private askUrl = 'http://hackersnews.herokuapp.com/api/posts/ask/';
+  private urlUrl = 'http://hackersnews.herokuapp.com/api/posts/url/';
+  private commentUrl = 'http://hackersnews.herokuapp.com/api/comments/'
 
   constructor(private http: Http) { }
 
-  getAsk(): Promise<Contribution[]> {
+  getAsks(): Promise<Contribution[]> {
     return this.http.get(this.askUrl)
                .toPromise()
                .then(response => response.json().data)
                .catch(this.handleError);
   }
 
-  getUrl(): Promise<Contribution[]> {
+  getUrls(): Promise<Contribution[]> {
     return this.http.get(this.urlUrl)
                .toPromise()
                .then(response => response.json().data)
@@ -55,6 +56,39 @@ export class HeroService {
                .then(res => res.json().data)
                .catch(this.handleError);
   }
+
+  getComment(id: number) {
+    let url = `${this.commentUrl}/${id}`;
+    return this.http.get(url)
+                .toPromise()
+                .then(response => response.json().data)
+                .catch(this.handleError);
+  }
+
+  postComment(contribution: Contribution): Promise<Contribution> {
+    let parameters = {};
+    parameters.comment = contribution.content;
+    parameters.parent_id = contribution.parent_id;
+    let headers = new Headers({
+      'Content-Type': 'application/json'});
+
+    return this.http
+               .post(this.contributionsUrl, JSON.stringify(parameters), {headers: headers})
+               .toPromise()
+               .then(res => res.json().data)
+               .catch(this.handleError);
+  }
+
+
+
+
+
+
+
+
+
+
+  ///////////////////////
 
 
 
