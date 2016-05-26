@@ -11,7 +11,8 @@ export class HeroService {
   private contributionsUrl = 'http://hackersnews.herokuapp.com/api/posts/';  // URL to web api
   private askUrl = 'http://hackersnews.herokuapp.com/api/posts/ask/';
   private urlUrl = 'http://hackersnews.herokuapp.com/api/posts/url/';
-  private commentUrl = 'http://hackersnews.herokuapp.com/api/comments/'
+  private commentUrl = 'http://hackersnews.herokuapp.com/api/comments/';
+  private replyUrl = 'http://hackersnews.herokuapp.com/api/replies/';
 
   constructor(private http: Http) { }
 
@@ -79,78 +80,35 @@ export class HeroService {
                .catch(this.handleError);
   }
 
-
-
-
-
-
-
-
-
-
-  ///////////////////////
-
-
-
-  getHero(id: number) {
-    return this.getHeroes()
-               .then(heroes => heroes.filter(hero => hero.id === id)[0]);
+  getReply(id: number) {
+    let url = `${this.replyUrl}/${id}`;
+    return this.http.get(url)
+                .toPromise()
+                .then(response => response.json().data)
+                .catch(this.handleError);
   }
 
-  save(hero: Hero): Promise<Hero>  {
-    if (hero.id) {
-      return this.put(hero);
-    }
-    return this.post(hero);
-  }
-
-  delete(hero: Hero) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    let url = `${this.heroesUrl}/${hero.id}`;
-
-    return this.http
-               .delete(url, headers)
-               .toPromise()
-               .catch(this.handleError);
-  }
-
-  // Add new Hero
-  private post(hero: Hero): Promise<Hero> {
+  postReply(contribution: Contribution): Promise<Contribution> {
+    let parameters = {};
+    parameters.reply = contribution.content;
+    parameters.parent_id = contribution.parent_id;
     let headers = new Headers({
       'Content-Type': 'application/json'});
 
     return this.http
-               .post(this.heroesUrl, JSON.stringify(hero), {headers: headers})
+               .post(this.replyUrl, JSON.stringify(parameters), {headers: headers})
                .toPromise()
                .then(res => res.json().data)
                .catch(this.handleError);
   }
 
-  // Update existing Hero
-  private put(hero: Hero) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    let url = `${this.heroesUrl}/${hero.id}`;
-
-    return this.http
-               .put(url, JSON.stringify(hero), {headers: headers})
-               .toPromise()
-               .then(() => hero)
-               .catch(this.handleError);
-  }
-
-  private handleError(error: any) {
-    console.error('An error occurred', error);
-    return Promise.reject(error.message || error);
-  }
-}
 
 
-/*
-Copyright 2016 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/
+
+
+  ///////////////// VOTES
+
+
+
+
+  ///////////////////////
