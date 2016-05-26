@@ -36,12 +36,21 @@ export class HeroService {
                 .catch(this.handleError);
   }
 
-  private post(hero: Hero): Promise<Hero> {
+  postPost(contribution: Contribution): Promise<Contribution> {
+    let parameters = {};
+    parameters.title = contribution.title;
+    if(contribution.contr_subtype=='url'){
+        parameters.url= contribution.url;
+    }
+    else{
+      parameters.text = contribution.text;
+    }
+    
     let headers = new Headers({
       'Content-Type': 'application/json'});
 
     return this.http
-               .post(this.heroesUrl, JSON.stringify(hero), {headers: headers})
+               .post(this.contributionsUrl, JSON.stringify(parameters), {headers: headers})
                .toPromise()
                .then(res => res.json().data)
                .catch(this.handleError);
