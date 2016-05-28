@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise';
 import { Contribution } from './contribution';
 
 @Injectable()
-export class HeroService {
+export class ContributionService {
 
   private contributionsUrl = 'http://hackersnews.herokuapp.com/api/posts/';  // URL to web api
   private askUrl = 'http://hackersnews.herokuapp.com/api/posts/ask/';
@@ -30,9 +30,9 @@ export class HeroService {
                .catch(this.handleError);
   }
 
-  getPost(id: number) {
-    let url = `${this.contributionsUrl}/${id}`;
-    return this.http.get(url)
+  getPost(id: number): Promise<Contribution> {
+    console.log(this.contributionsUrl+id);
+    return this.http.get(this.contributionsUrl+id)
                 .toPromise()
                 .then(response => response.json().data)
                 .catch(this.handleError);
@@ -45,7 +45,7 @@ export class HeroService {
         parameters.url= contribution.url;
     }
     else{
-      parameters.text = contribution.text;
+      parameters.content = contribution.content;
     }
     
     let headers = new Headers({
@@ -112,3 +112,4 @@ export class HeroService {
 
 
   ///////////////////////
+}

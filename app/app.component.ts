@@ -5,6 +5,8 @@ import { DashboardComponent }  from './dashboard.component';
 import { HeroesComponent }     from './heroes.component';
 import { HeroDetailComponent } from './hero-detail.component';
 import { HeroService }         from './hero.service';
+import { ContributionService } from './contribution.service'
+import { ContributionDetailComponent } from './contribution-detail.component'
 
 @Component({
   selector: 'my-app',
@@ -14,6 +16,7 @@ import { HeroService }         from './hero.service';
     <nav>
       <a [routerLink]="['Dashboard']">Dashboard</a>
       <a [routerLink]="['Heroes']">Heroes</a>
+      <a [routerLink]="['ContributionDetail', {'id':'5'}]">Contribution 5 (test)</a>
     </nav>
     <router-outlet></router-outlet>
   `,
@@ -22,15 +25,17 @@ import { HeroService }         from './hero.service';
   providers: [
     ROUTER_PROVIDERS,
     HeroService,
+    ContributionService
   ]
 })
 @RouteConfig([
   { path: '/dashboard',  name: 'Dashboard',  component: DashboardComponent, useAsDefault: true },
   { path: '/detail/:id', name: 'HeroDetail', component: HeroDetailComponent },
-  { path: '/heroes',     name: 'Heroes',     component: HeroesComponent }
+  { path: '/heroes',     name: 'Heroes',     component: HeroesComponent },
+  { path: '/contribution/:id', name: 'ContributionDetail', component: ContributionDetailComponent }
 ])
 export class AppComponent {
-  title = 'Tour of Heroes';
+  title = 'HackerNews';
 }
 
 
