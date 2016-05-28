@@ -15,7 +15,12 @@ export class UserService {
   getUser(id: number): Promise<User> {
     return this.http.get(this.userUrl+id)
                .toPromise()
-               .then(response => response.json().data)
+               .then(response => {
+               	let data = response.json().data
+               	console.log(response.json());
+               	console.log(data);
+               	return response.json()
+               })
                .catch(this.handleError);
   }
 

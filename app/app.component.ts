@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
-import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
+import { Component, OnInit } from '@angular/core';
+import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS,  Router } from '@angular/router-deprecated';
 
 import { DashboardComponent }  from './dashboard.component';
 import { HeroesComponent }     from './heroes.component';
 import { HeroDetailComponent } from './hero-detail.component';
+import { UserDetailComponent } from './user-detail.component';
 import { HeroService }         from './hero.service';
+import { UserService }         from './user.service';
 
 @Component({
   selector: 'my-app',
@@ -14,6 +16,9 @@ import { HeroService }         from './hero.service';
     <nav>
       <a [routerLink]="['Dashboard']">Dashboard</a>
       <a [routerLink]="['Heroes']">Heroes</a>
+      <a [routerLink]="['UserDetail',{id:1}]">User</a>
+      <a [href]='login_url'>Login</a>
+      {{token}}
     </nav>
     <router-outlet></router-outlet>
   `,
@@ -22,17 +27,25 @@ import { HeroService }         from './hero.service';
   providers: [
     ROUTER_PROVIDERS,
     HeroService,
+    UserService
   ]
 })
 @RouteConfig([
-  { path: '/dashboard',  name: 'Dashboard',  component: DashboardComponent, useAsDefault: true },
+  { path: '/dashboard',  name: 'Dashboard',  component: DashboardComponent },
   { path: '/detail/:id', name: 'HeroDetail', component: HeroDetailComponent },
-  { path: '/heroes',     name: 'Heroes',     component: HeroesComponent }
+  { path: '/heroes',     name: 'Heroes',     component: HeroesComponent },
+  { path: '/user/:id',     name: 'UserDetail',     component: UserDetailComponent }
 ])
-export class AppComponent {
+export class AppComponent  implements OnInit {
+  constructor(private router: Router) {}
   title = 'Tour of Heroes';
-}
+  host = window.location.host;
+  login_url = 'http://hackersnews.herokuapp.com/angular?redirect_url=http://'+this.host;
 
+  ngOnInit() {
+    this.router.navigate(['Dashboard']);
+  }
+}
 
 /*
 Copyright 2016 Google Inc. All Rights Reserved.
