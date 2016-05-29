@@ -16,8 +16,8 @@ var UserService = (function () {
     function UserService(http, keeper) {
         this.http = http;
         this.keeper = keeper;
-        this.userUrl = 'http://hackersnews.herokuapp.com/api/users/'; // URL to web api
-        this.meUrl = 'http://hackersnews.herokuapp.com/api/me/'; // URL to web api
+        this.userUrl = 'https://hackersnews.herokuapp.com/api/users/'; // URL to web api
+        this.meUrl = 'https://hackersnews.herokuapp.com/api/me/'; // URL to web api
     }
     UserService.prototype.getUser = function (id) {
         return this.http.get(this.userUrl + id)
