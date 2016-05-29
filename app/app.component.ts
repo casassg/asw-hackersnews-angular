@@ -7,9 +7,9 @@ import { HeroDetailComponent } from './hero-detail.component';
 import { UserDetailComponent } from './user/user-detail.component';
 import { MeDetailComponent } from './user/me.component';
 import { HeroService }         from './hero.service';
-import { ContributionService } from './contribution.service'
-import { ContributionDetailComponent } from './contribution-detail.component'
-import { Newest } from './newest.component'
+import { ContributionService } from './contribution.service';
+import { ContributionDetailComponent } from './contribution-detail.component';
+/*import { Newest } from './newest.component';*/
 import { UserService }         from './user/user.service';
 import { TokenKeeper }         from './user/token.keeper';
 import { setCookie, getCookie }         from './user/cookies.helper';
@@ -21,8 +21,7 @@ import { setCookie, getCookie }         from './user/cookies.helper';
     <h1>{{title}}</h1>
     <nav>
       <a [routerLink]="['Dashboard']">Dashboard</a>
-      <a [routerLink]="['Heroes']">Heroes</a>
-      <a [routerLink]="['Newest']">Newest</a>
+      <!--<a [routerLink]="['Newest']">Newest</a>-->
       <a [routerLink]="['ContributionDetail', {'id':'5'}]">Contribution 5 (test)</a>
       <a [routerLink]="['UserDetail',{id:1}]">Usuari 1 (test)</a>
       <a *ngIf="loggedIn" [routerLink]="['MeDetail']">Me</a>
@@ -30,6 +29,7 @@ import { setCookie, getCookie }         from './user/cookies.helper';
       <a *ngIf="loggedIn" (click)='logout()'>Logout</a>
     </nav>
     <router-outlet></router-outlet>
+  `,
   styleUrls: ['app/app.component.css'],
   directives: [ROUTER_DIRECTIVES],
   providers: [
@@ -37,16 +37,15 @@ import { setCookie, getCookie }         from './user/cookies.helper';
     HeroService,
     ContributionService,
     UserService,
-    TokenKeeper
+    TokenKeeper,
   ]
 })
 @RouteConfig([
   { path: '/dashboard',  name: 'Dashboard',  component: DashboardComponent, useAsDefault: true },
-  { path: '/dashboard',  name: 'Dashboard',  component: DashboardComponent, useAsDefault: true},
   { path: '/user/:id',     name: 'UserDetail',     component: UserDetailComponent },
-  { path: '/me',     name: 'MeDetail',     component: MeDetailComponent}
+  { path: '/me',     name: 'MeDetail',     component: MeDetailComponent},
   { path: '/contribution/:id', name: 'ContributionDetail', component: ContributionDetailComponent },
-  { path: '/newest', name: 'Newest', component: NewestComponent }
+  /*{ path: '/newest', name: 'Newest', component: NewestComponent }*/
 ])
 
 export class AppComponent  implements OnInit {
@@ -96,6 +95,8 @@ private function getQueryParams(qs:string) {
 
     return params;
 }
+
+
 
 /*
 Copyright 2016 Google Inc. All Rights Reserved.
