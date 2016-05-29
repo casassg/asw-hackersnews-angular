@@ -23,6 +23,11 @@ var MeDetailComponent = (function () {
         this._userService.getMe()
             .then(function (user) { return _this.user = user; });
     };
+    MeDetailComponent.prototype.save = function (updated_user) {
+        var _this = this;
+        this._userService.update(updated_user)
+            .then(function (user) { return _this.user = user; });
+    };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', user_1.User)

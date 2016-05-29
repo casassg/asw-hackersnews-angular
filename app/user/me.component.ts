@@ -22,6 +22,11 @@ export class MeDetailComponent implements OnInit {
       this._userService.getMe()
           .then(user => this.user = user);
   }
+
+  save(updated_user:User){
+    this._userService.update(updated_user)
+      .then(user => this.user = user)
+  }
 }
 
 
