@@ -1,4 +1,5 @@
 export class Contribution {
+  id: number;
   title: string;
   contr_subtype: string;
   content: string;

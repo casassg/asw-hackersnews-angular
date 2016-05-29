@@ -3,6 +3,7 @@ import { RouteParams } from '@angular/router-deprecated';
 
 import { Contribution }        from './contribution';
 import { ContributionService } from './contribution.service';
+import { UserService } from '../user/user.service'
 @Component({
   selector: 'my-contribution-detail',
   templateUrl: 'contribution/contribution-detail.component.html',
@@ -14,18 +15,34 @@ export class ContributionDetailComponent implements OnInit {
   error: any;
   comment = new Contribution();
   navigated = false; // true if navigated here
+  name: String;
+  comments: Contribution[];
 
   constructor(
     private _contributionService: ContributionService,
-    private _routeParams: RouteParams) {
+    private _routeParams: RouteParams,
+    private _userService: UserService) {
   }
 
   ngOnInit() {
     if (this._routeParams.get('id') !== null) {
+      this.comments = [];
       let id = +this._routeParams.get('id');
       this.navigated = true;
       this._contributionService.getPost(id)
-          .then(contribution => this.contribution = contribution);
+          .then(contribution => {
+                                this._userService.getUser(id).then(user => this.name = user.name);
+                                for (var com of contribution.comments) {
+                                  this._userService.getUser(com.user_id).then(user => com.user_id = user.name);
+                                  this._contributionService.getComment(com.id).then(comment => {comment.user_id = com.user_id;
+                                                                                                for (var rep of comment.comments) {
+                                                                                                  this._userService.getUser(rep.user_id).then(user => rep.user_id = user.name);
+                                                                                                }
+                                                                                                this.comments.push(comment);
+                                                                                                });
+                                }
+                                this.contribution = contribution; 
+                                });
     } else {
       this.navigated = false;
     }
