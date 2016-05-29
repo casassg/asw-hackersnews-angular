@@ -36,7 +36,7 @@
 				<br/>
 				{{comment.user_id}} created at {{comment.created_at}}<br/>
 				{{comment.content}}<br/>
-				{{comment.upvote}} votes <a href="#">reply</a>
+				{{comment.upvote}} votes <a href="#" *ngIf="loggedIn()">reply</a>
 				<br/>
 				<div class="reply" *ngFor="let reply of comment.comments">
 					<br/>

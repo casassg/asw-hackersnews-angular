@@ -31,7 +31,7 @@ var ContributionDetailComponent = (function () {
             this._contributionService.getPost(id_1)
                 .then(function (contribution) {
                 _this._userService.getUser(id_1).then(function (user) { return _this.name = user.name; });
-                contribution.comments.sort(function (c1, c2) { return c1.created_at - c2.created_at; });
+                contribution.comments.sort(function (c1, c2) { return (new Date(c1.created_at)).getTime() - (new Date(c2.created_at)).getTime(); });
                 for (var _i = 0, _a = contribution.comments; _i < _a.length; _i++) {
                     var com = _a[_i];
                     _this._userService.getUser(com.user_id).then(function (user) { return com.user_id = user.name; });
