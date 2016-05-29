@@ -2,10 +2,10 @@ export class Contribution {
   title: string;
   contr_subtype: string;
   content: string;
-  user_id: integer;
+  user_id: number;
   url: string;
-  parent_id: integer;
-  upvote: integer;
+  parent_id: number;
+  upvote: number;
   created_at: string;
   updated_at: string;
   comments: Contribution[];

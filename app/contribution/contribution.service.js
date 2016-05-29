@@ -40,21 +40,27 @@ var ContributionService = (function () {
             .catch(this.handleError);
     };
     ContributionService.prototype.postPost = function (contribution) {
-        var parameters = {};
-        parameters.title = contribution.title;
-        if (contribution.contr_subtype == 'url') {
-            parameters.url = contribution.url;
-        }
-        else {
-            parameters.content = contribution.content;
-        }
+        var title = contribution.title;
         var headers = new http_1.Headers({
             'Content-Type': 'application/json' });
-        return this.http
-            .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
-            .toPromise()
-            .then(function (res) { return res.json().data; })
-            .catch(this.handleError);
+        if (contribution.contr_subtype == 'url') {
+            var url = contribution.url;
+            var parameters = { title: title, url: url };
+            return this.http
+                .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
+                .toPromise()
+                .then(function (res) { return res.json().data; })
+                .catch(this.handleError);
+        }
+        else {
+            var content = contribution.content;
+            var parameters = { title: title, content: content };
+            return this.http
+                .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
+                .toPromise()
+                .then(function (res) { return res.json().data; })
+                .catch(this.handleError);
+        }
     };
     ContributionService.prototype.getComment = function (id) {
         var url = this.commentUrl + "/" + id;
@@ -64,9 +70,9 @@ var ContributionService = (function () {
             .catch(this.handleError);
     };
     ContributionService.prototype.postComment = function (contribution) {
-        var parameters = {};
-        parameters.comment = contribution.content;
-        parameters.parent_id = contribution.parent_id;
+        var comment = contribution.content;
+        var parent_id = contribution.parent_id;
+        var parameters = { comment: comment, parent_id: parent_id };
         var headers = new http_1.Headers({
             'Content-Type': 'application/json' });
         return this.http
@@ -83,9 +89,9 @@ var ContributionService = (function () {
             .catch(this.handleError);
     };
     ContributionService.prototype.postReply = function (contribution) {
-        var parameters = {};
-        parameters.reply = contribution.content;
-        parameters.parent_id = contribution.parent_id;
+        var reply = contribution.content;
+        var parent_id = contribution.parent_id;
+        var parameters = { parent_id: parent_id, reply: reply };
         var headers = new http_1.Headers({
             'Content-Type': 'application/json' });
         return this.http

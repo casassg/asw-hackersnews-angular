@@ -3,7 +3,7 @@ import { Http, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Contribution } from './contribution/contribution';
+import { Contribution } from './contribution';
 
 @Injectable()
 export class ContributionService {
@@ -39,23 +39,29 @@ export class ContributionService {
   }
 
   postPost(contribution: Contribution): Promise<Contribution> {
-    let parameters = {};
-    parameters.title = contribution.title;
-    if(contribution.contr_subtype=='url'){
-        parameters.url= contribution.url;
-    }
-    else{
-      parameters.content = contribution.content;
-    }
-    
+    const title = contribution.title;
     let headers = new Headers({
       'Content-Type': 'application/json'});
 
-    return this.http
+    if(contribution.contr_subtype=='url'){
+        const url= contribution.url;
+        let parameters = {title,url};
+        return this.http
                .post(this.contributionsUrl, JSON.stringify(parameters), {headers: headers})
                .toPromise()
                .then(res => res.json().data)
                .catch(this.handleError);
+    }
+    else{
+      const content = contribution.content;
+      let parameters = {title,content};
+      return this.http
+               .post(this.contributionsUrl, JSON.stringify(parameters), {headers: headers})
+               .toPromise()
+               .then(res => res.json().data)
+               .catch(this.handleError);
+    }
+    
   }
 
   getComment(id: number) {
@@ -67,9 +73,9 @@ export class ContributionService {
   }
 
   postComment(contribution: Contribution): Promise<Contribution> {
-    let parameters = {};
-    parameters.comment = contribution.content;
-    parameters.parent_id = contribution.parent_id;
+    const comment = contribution.content;
+    const parent_id = contribution.parent_id;
+    let parameters = {comment,parent_id};
     let headers = new Headers({
       'Content-Type': 'application/json'});
 
@@ -89,9 +95,9 @@ export class ContributionService {
   }
 
   postReply(contribution: Contribution): Promise<Contribution> {
-    let parameters = {};
-    parameters.reply = contribution.content;
-    parameters.parent_id = contribution.parent_id;
+    const reply = contribution.content;
+    const parent_id = contribution.parent_id;
+    let parameters = {parent_id, reply};
     let headers = new Headers({
       'Content-Type': 'application/json'});
 
@@ -110,5 +116,5 @@ export class ContributionService {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
   }
-  
+
 }
