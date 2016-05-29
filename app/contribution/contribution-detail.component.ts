@@ -33,21 +33,36 @@ export class ContributionDetailComponent implements OnInit {
             this.navigated = true;
             this._contributionService.getPost(id)
                 .then(contribution => {
-                    this._userService.getUser(id).then(user => this.name = user.name);
-                    contribution.comments.sort((c1, c2) => (new Date(c1.created_at)).getTime() - (new Date(c2.created_at)).getTime());
-                    for (var com of contribution.comments) {
-                        this._userService.getUser(com.user_id).then(user => com.user_name = user.name);
-                        this._contributionService.getComment(com.id).then(comment => {
-                            comment.user_name = com.user_name;
-                            for (var rep of comment.comments) {
-                                this._userService.getUser(rep.user_id).then(user => rep.user_name = user.name);
+                    this._userService.getUser(contribution.user_id).then(user1=> {
+                            contribution.user = user1;
+                            contribution.user_name = user1.name;
+                            contribution.user_id = user1.id;
+                            //contribution.comments.sort((c1, c2) => (new Date(c1.created_at)).getTime() - (new Date(c2.created_at)).getTime());
+                            for (let com of contribution.comments) {
+                                this._userService.getUser(com.user_id).then(user2 => {
+                                    com.user = user2;
+                                    com.user_name = user2.name;
+                                    this._contributionService.getComment(com.id).then(comment => {
+                                        comment.user_name= user2.name;
+                                        for (let rep of comment.comments) {
+                                            this._userService.getUser(rep.user_id).then(user => {
+                                                rep.user_name = user.name;
+
+                                            });
+                                        }
+                                        this.comments.push(comment);
+                                        this.comments = this.comments.sort((c1, c2) => (new Date(c1.created_at)).getTime() - (new Date(c2.created_at)).getTime());
+
+                                    });
+
+                                })
                             }
-                            this.comments.push(comment);
-                        });
-                    }
+                        }
+                    );
                     this.contribution = contribution;
                 });
-        } else {
+        }
+        else {
             this.navigated = false;
         }
     }
