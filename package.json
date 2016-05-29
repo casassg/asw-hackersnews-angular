@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "concurrently \"tsc -w\" \"node ./bin/www\" ",
+    "prod": "tsc && node ./bin/www",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "typings": "typings install",
