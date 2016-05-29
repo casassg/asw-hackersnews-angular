@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { RouteParams } from '@angular/router-deprecated';
+import { RouteParams} from '@angular/router-deprecated';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Contribution }        from './contribution';
@@ -21,7 +21,8 @@ export class ReplyComponent implements OnInit {
   constructor(
     private _contributionService: ContributionService,
     private _routeParams: RouteParams,
-    private _userService: UserService) {
+    private _userService: UserService,
+  private _router: Router) {
   }
 
   ngOnInit() {
@@ -39,7 +40,12 @@ export class ReplyComponent implements OnInit {
   }
 
   postReply(text:string, parent:number) {
-    this._contributionService.postReply(text, parent);
+    this._contributionService.postReply(text, parent).then(reply => {
+      this._contributionService.getComment(reply.parent_id).then(comment=>{
+        this._router.navigate(['ContributionDetail',{'id':comment.parent_id}]);
+      })
+    })
+
   }
 
   loggedIn() {
