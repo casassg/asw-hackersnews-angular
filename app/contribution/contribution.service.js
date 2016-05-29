@@ -33,7 +33,6 @@ var ContributionService = (function () {
             .catch(this.handleError);
     };
     ContributionService.prototype.getPost = function (id) {
-        console.log(this.contributionsUrl + id);
         return this.http.get(this.contributionsUrl + id)
             .toPromise()
             .then(function (response) { return response.json().data; })
