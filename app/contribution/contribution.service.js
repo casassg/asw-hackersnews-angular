@@ -21,24 +21,6 @@ var ContributionService = (function () {
         this.replyUrl = 'https://hackersnews.herokuapp.com/api/replies/';
         this.newVote = 'https://hackersnews.herokuapp.com/api/votes/';
     }
-    ContributionService.prototype.getAsks = function () {
-        return this.http.get(this.askUrl)
-            .toPromise()
-            .then(function (response) { return response.json().data; })
-            .catch(this.handleError);
-    };
-    ContributionService.prototype.getUrls = function () {
-        return this.http.get(this.urlUrl)
-            .toPromise()
-            .then(function (response) { return response.json().data; })
-            .catch(this.handleError);
-    };
-    ContributionService.prototype.getPost = function (id) {
-        return this.http.get(this.contributionsUrl + id)
-            .toPromise()
-            .then(function (response) { return response.json().data; })
-            .catch(this.handleError);
-    };
     ContributionService.prototype.toContribution = function (json) {
         var contribution = json.contribution;
         console.log(contribution);
