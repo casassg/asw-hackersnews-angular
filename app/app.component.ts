@@ -7,8 +7,13 @@ import { HeroDetailComponent } from './hero-detail.component';
 import { UserDetailComponent } from './user/user-detail.component';
 import { MeDetailComponent } from './user/me.component';
 import { HeroService }         from './hero.service';
+import { ContributionService } from './contribution/contribution.service';
+import { ContributionDetailComponent } from './contribution/contribution-detail.component';
+import { NewestComponent } from './contribution/newest.component';
+import { AsksComponent } from './contribution/asks.component';
 import { UserService }         from './user/user.service';
 import { TokenKeeper }         from './user/token.keeper';
+import { ReplyComponent } from './contribution/reply.component';
 import { setCookie, getCookie }         from './user/cookies.helper';
 
 @Component({
@@ -17,8 +22,8 @@ import { setCookie, getCookie }         from './user/cookies.helper';
   template: `
     <h1>{{title}}</h1>
     <nav>
-      <a [routerLink]="['Dashboard']">Dashboard</a>
-      <a [routerLink]="['UserDetail',{id:1}]">Usuari 1 (test)</a>
+      <a [routerLink]="['Newest']">Newest</a>
+      <a [routerLink]="['Asks']">Asks</a>
       <a *ngIf="loggedIn" [routerLink]="['MeDetail']">Me</a>
       <a *ngIf="!loggedIn" [href]='login_url'>Login</a>
       <a *ngIf="loggedIn" (click)='logout()'>Logout</a>
@@ -30,19 +35,24 @@ import { setCookie, getCookie }         from './user/cookies.helper';
   providers: [
     ROUTER_PROVIDERS,
     HeroService,
+    ContributionService,
     UserService,
     TokenKeeper,
   ]
 })
 @RouteConfig([
-  { path: '/dashboard',  name: 'Dashboard',  component: DashboardComponent, useAsDefault: true},
   { path: '/user/:id',     name: 'UserDetail',     component: UserDetailComponent },
-  { path: '/me',     name: 'MeDetail',     component: MeDetailComponent}
+  { path: '/me',     name: 'MeDetail',     component: MeDetailComponent},
+  { path: '/contribution/:id', name: 'ContributionDetail', component: ContributionDetailComponent },
+  { path: '/newest', name: 'Newest', component: NewestComponent,  useAsDefault: true },
+  { path: '/asks', name: 'Asks', component: AsksComponent },
+  { path: '/reply/:id', name: 'Reply', component: ReplyComponent },
 ])
+
 export class AppComponent  implements OnInit {
   
 
-  constructor(private router: Router, private keeper: TokenKeeper) {
+  constructor(private router: Router, private keeper: TokenKeeper, private userServ: UserService) {
   }
   title = 'Hackers News';
   host = window.location.host;
@@ -62,6 +72,11 @@ export class AppComponent  implements OnInit {
 
     //this.router.navigate(['Dashboard']);
     this.loggedIn = this.keeper.isLoggedIn();
+    if (this.loggedIn){
+      this.userServ.getMe().then(user=>{
+        this.keeper.registerUser(user);
+      })
+    }
   }
 
   logout() {
@@ -86,6 +101,8 @@ function getQueryParams(qs:string) {
 
     return params;
 }
+
+
 
 /*
 Copyright 2016 Google Inc. All Rights Reserved.

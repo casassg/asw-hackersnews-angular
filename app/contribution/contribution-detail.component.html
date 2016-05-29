@@ -1,0 +1,58 @@
+<div *ngIf="contribution">
+	<br/>
+	<table>
+		<tr class="athing">
+			<td class="ind"></td>
+			<td valign="top"><!-- Show votes if logged in and not voted--></td>
+			<td class="default">
+				<div style="margin-top:2px; margin-bottom: -10px;">
+					<span class="comhead">
+						<a href="#">{{contribution.title}}</a>
+						<a *ngIf="contribution.contr_subtype == 'url'" href="#">({{contribution.url}})</a>
+						<!-- Show url if not null-->
+					</span>
+				</div>
+				<p>{{contribution.upvote}} points by 
+				<a href="#">{{name}}</a> created at 
+				<a href="#">{{contribution.created_at}}</a></p>
+				<p *ngIf="contribution.contr_subtype == 'text'">{{contribution.content}}</p>
+		</tr>
+		<tr style="height:20px">
+			<td class="ind"></td>
+			<td></td>
+			<td>
+				<br/>
+				<span *ngIf="loggedIn()">
+					<textarea class="input_comment" [(ngModel)]="comment.content"></textarea>
+					<button (click)="postComment(comment.content, contribution.id)">Comment</button>
+				</span>
+			</td>
+		</tr>
+		<tr *ngFor="let comment of comments">
+			<td></td>
+			<td></td>
+			<td>
+				<br/>
+				{{comment.user_name}} created at {{comment.created_at}}<br/>
+				<span *ngIf="comment.canVote==undefined"><a (click)="vote(comment)">^</a> </span>{{comment.content}}<br/>
+				{{comment.upvote}} votes <a [routerLink]="['Reply', {'id':comment.id}]" *ngIf="loggedIn()">reply</a>
+				<br/>
+				<div class="reply" *ngFor="let reply of comment.comments">
+					<br/>
+					{{reply.user_name}} created at {{reply.created_at}}<br/>
+					<span *ngIf="reply.canVote==undefined"><a (click)="vote(reply)">^</a> </span>{{reply.content}}<br/>
+					{{reply.upvote}} votes
+				</div>
+			</td>
+		</tr>
+		<br/>
+		<tr>
+		</tr>
+	</table>
+</div>
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->

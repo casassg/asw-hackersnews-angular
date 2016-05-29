@@ -22,6 +22,12 @@ var TokenKeeper = (function () {
     TokenKeeper.prototype.getToken = function () {
         return this.token;
     };
+    TokenKeeper.prototype.registerUser = function (user) {
+        this.user = user;
+    };
+    TokenKeeper.prototype.getCurrentUser = function () {
+        return this.user;
+    };
     TokenKeeper = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])

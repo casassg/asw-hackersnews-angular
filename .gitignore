@@ -1,6 +1,6 @@
 typings
 node_modules
-app/*.js
-app/*.js.map
+*.js
+*.js.map
 *log
-.idea
+.idea/*
