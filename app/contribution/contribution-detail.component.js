@@ -35,6 +35,9 @@ var ContributionDetailComponent = (function () {
     ContributionDetailComponent.prototype.postComment = function (text, parent) {
         this._contributionService.postComment(text, parent);
     };
+    ContributionDetailComponent.prototype.loggedIn = function () {
+        return this._contributionService.loggedIn();
+    };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', contribution_1.Contribution)

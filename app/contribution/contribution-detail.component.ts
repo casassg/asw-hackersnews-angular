@@ -34,9 +34,12 @@ export class ContributionDetailComponent implements OnInit {
   postComment(text:string, parent:number) {
     this._contributionService.postComment(text, parent);
   }
+
+  loggedIn() {
+    return this._contributionService.loggedIn();
+  }
+
 }
-
-
 
 /*
 Copyright 2016 Google Inc. All Rights Reserved.

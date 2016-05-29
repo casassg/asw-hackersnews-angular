@@ -123,6 +123,9 @@ var ContributionService = (function () {
             .then(function (res) { return res.json().data; })
             .catch(this.handleError);
     };
+    ContributionService.prototype.loggedIn = function () {
+        return this.keeper.isLoggedIn();
+    };
     ContributionService.prototype.handleError = function (error) {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
