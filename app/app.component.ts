@@ -54,7 +54,7 @@ import { setCookie, getCookie }         from './user/cookies.helper';
 export class AppComponent  implements OnInit {
   
 
-  constructor(private router: Router, private keeper: TokenKeeper) {
+  constructor(private router: Router, private keeper: TokenKeeper, private userServ: UserService) {
   }
   title = 'Hackers News';
   host = window.location.host;
@@ -74,6 +74,11 @@ export class AppComponent  implements OnInit {
 
     //this.router.navigate(['Dashboard']);
     this.loggedIn = this.keeper.isLoggedIn();
+    if (this.loggedIn){
+      this.userServ.getMe().then(user=>{
+        this.keeper.registerUser(user);
+      })
+    }
   }
 
   logout() {
