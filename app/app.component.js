@@ -19,6 +19,7 @@ var contribution_detail_component_1 = require('./contribution/contribution-detai
 var asks_component_1 = require('./contribution/asks.component');
 var user_service_1 = require('./user/user.service');
 var token_keeper_1 = require('./user/token.keeper');
+var reply_component_1 = require('./contribution/reply.component');
 var cookies_helper_1 = require('./user/cookies.helper');
 var AppComponent = (function () {
     function AppComponent(router, keeper) {
@@ -67,7 +68,8 @@ var AppComponent = (function () {
             { path: '/user/:id', name: 'UserDetail', component: user_detail_component_1.UserDetailComponent },
             { path: '/me', name: 'MeDetail', component: me_component_1.MeDetailComponent },
             { path: '/contribution/:id', name: 'ContributionDetail', component: contribution_detail_component_1.ContributionDetailComponent },
-            { path: '/asks', name: 'Asks', component: asks_component_1.AsksComponent }
+            { path: '/asks', name: 'Asks', component: asks_component_1.AsksComponent },
+            { path: '/reply/:id', name: 'Reply', component: reply_component_1.ReplyComponent }
         ]), 
         __metadata('design:paramtypes', [router_deprecated_1.Router, token_keeper_1.TokenKeeper])
     ], AppComponent);

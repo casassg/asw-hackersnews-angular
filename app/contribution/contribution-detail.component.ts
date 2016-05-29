@@ -1,5 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { RouteParams } from '@angular/router-deprecated';
+import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Contribution }        from './contribution';
 import { ContributionService } from './contribution.service';
@@ -7,7 +8,8 @@ import { UserService } from '../user/user.service'
 @Component({
   selector: 'my-contribution-detail',
   templateUrl: 'contribution/contribution-detail.component.html',
-  styleUrls: ['contribution/contribution-detail.component.css']
+  styleUrls: ['contribution/contribution-detail.component.css'],
+  directives: [ROUTER_DIRECTIVES],
 })
 export class ContributionDetailComponent implements OnInit {
   @Input() contribution: Contribution;
@@ -21,7 +23,8 @@ export class ContributionDetailComponent implements OnInit {
   constructor(
     private _contributionService: ContributionService,
     private _routeParams: RouteParams,
-    private _userService: UserService) {
+    private _userService: UserService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -34,10 +37,10 @@ export class ContributionDetailComponent implements OnInit {
                                 this._userService.getUser(id).then(user => this.name = user.name);
                                 contribution.comments.sort((c1,c2) => (new Date(c1.created_at)).getTime() - (new Date(c2.created_at)).getTime());
                                 for (var com of contribution.comments) {
-                                  this._userService.getUser(com.user_id).then(user => com.user_id = user.name);
-                                  this._contributionService.getComment(com.id).then(comment => {comment.user_id = com.user_id;
+                                  this._userService.getUser(com.user_id).then(user => com.user_name = user.name);
+                                  this._contributionService.getComment(com.id).then(comment => {comment.user_name = com.user_name;
                                                                                                 for (var rep of comment.comments) {
-                                                                                                  this._userService.getUser(rep.user_id).then(user => rep.user_id = user.name);
+                                                                                                  this._userService.getUser(rep.user_id).then(user => rep.user_name = user.name);
                                                                                                 }
                                                                                                 this.comments.push(comment);
                                                                                                 });

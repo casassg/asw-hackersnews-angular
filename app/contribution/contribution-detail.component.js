@@ -10,14 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
+var router_deprecated_2 = require('@angular/router-deprecated');
 var contribution_1 = require('./contribution');
 var contribution_service_1 = require('./contribution.service');
 var user_service_1 = require('../user/user.service');
 var ContributionDetailComponent = (function () {
-    function ContributionDetailComponent(_contributionService, _routeParams, _userService) {
+    function ContributionDetailComponent(_contributionService, _routeParams, _userService, router) {
         this._contributionService = _contributionService;
         this._routeParams = _routeParams;
         this._userService = _userService;
+        this.router = router;
         this.close = new core_1.EventEmitter();
         this.comment = new contribution_1.Contribution();
         this.navigated = false; // true if navigated here
@@ -34,12 +36,12 @@ var ContributionDetailComponent = (function () {
                 contribution.comments.sort(function (c1, c2) { return (new Date(c1.created_at)).getTime() - (new Date(c2.created_at)).getTime(); });
                 for (var _i = 0, _a = contribution.comments; _i < _a.length; _i++) {
                     var com = _a[_i];
-                    _this._userService.getUser(com.user_id).then(function (user) { return com.user_id = user.name; });
+                    _this._userService.getUser(com.user_id).then(function (user) { return com.user_name = user.name; });
                     _this._contributionService.getComment(com.id).then(function (comment) {
-                        comment.user_id = com.user_id;
+                        comment.user_name = com.user_name;
                         for (var _i = 0, _a = comment.comments; _i < _a.length; _i++) {
                             var rep = _a[_i];
-                            _this._userService.getUser(rep.user_id).then(function (user) { return rep.user_id = user.name; });
+                            _this._userService.getUser(rep.user_id).then(function (user) { return rep.user_name = user.name; });
                         }
                         _this.comments.push(comment);
                     });
@@ -69,9 +71,10 @@ var ContributionDetailComponent = (function () {
         core_1.Component({
             selector: 'my-contribution-detail',
             templateUrl: 'contribution/contribution-detail.component.html',
-            styleUrls: ['contribution/contribution-detail.component.css']
+            styleUrls: ['contribution/contribution-detail.component.css'],
+            directives: [router_deprecated_2.ROUTER_DIRECTIVES],
         }), 
-        __metadata('design:paramtypes', [contribution_service_1.ContributionService, router_deprecated_1.RouteParams, user_service_1.UserService])
+        __metadata('design:paramtypes', [contribution_service_1.ContributionService, router_deprecated_1.RouteParams, user_service_1.UserService, router_deprecated_2.Router])
     ], ContributionDetailComponent);
     return ContributionDetailComponent;
 }());

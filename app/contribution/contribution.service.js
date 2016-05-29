@@ -44,9 +44,7 @@ var ContributionService = (function () {
     ContributionService.prototype.getUrls = function () {
         return this.http.get(this.urlUrl)
             .toPromise()
-            .then(function (response) {
-            return response.json();
-        })
+            .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     ContributionService.prototype.getPost = function (id) {
@@ -114,10 +112,10 @@ var ContributionService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    ContributionService.prototype.postReply = function (contribution) {
-        var reply = contribution.content;
-        var parent_id = contribution.parent_id;
-        var parameters = { 'parent_id': contribution.parent_id, 'reply': contribution.content };
+    ContributionService.prototype.postReply = function (text, parentid) {
+        var reply = text;
+        var parent_id = parentid;
+        var parameters = { 'parent_id': parent_id, 'reply': reply };
         var headers = new http_1.Headers({
             'Content-Type': 'application/json'
         });

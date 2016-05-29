@@ -12,6 +12,7 @@ import { ContributionDetailComponent } from './contribution/contribution-detail.
 import { AsksComponent } from './contribution/asks.component';
 import { UserService }         from './user/user.service';
 import { TokenKeeper }         from './user/token.keeper';
+import { ReplyComponent } from './contribution/reply.component';
 import { setCookie, getCookie }         from './user/cookies.helper';
 
 @Component({
@@ -46,7 +47,8 @@ import { setCookie, getCookie }         from './user/cookies.helper';
   { path: '/user/:id',     name: 'UserDetail',     component: UserDetailComponent },
   { path: '/me',     name: 'MeDetail',     component: MeDetailComponent},
   { path: '/contribution/:id', name: 'ContributionDetail', component: ContributionDetailComponent },
-  { path: '/asks', name: 'Asks', component: AsksComponent }
+  { path: '/asks', name: 'Asks', component: AsksComponent },
+  { path: '/reply/:id', name: 'Reply', component: ReplyComponent }
 ])
 
 export class AppComponent  implements OnInit {
