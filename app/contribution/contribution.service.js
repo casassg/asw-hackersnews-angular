@@ -11,9 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/toPromise');
+var token_keeper_1 = require('../user/token.keeper');
 var ContributionService = (function () {
-    function ContributionService(http) {
+    function ContributionService(http, keeper) {
         this.http = http;
+        this.keeper = keeper;
         this.contributionsUrl = 'https://hackersnews.herokuapp.com/api/posts/'; // URL to web api
         this.askUrl = 'https://hackersnews.herokuapp.com/api/posts/ask/';
         this.urlUrl = 'https://hackersnews.herokuapp.com/api/posts/url/';
@@ -77,15 +79,16 @@ var ContributionService = (function () {
             .then(function (response) { return response.json().data; })
             .catch(this.handleError);
     };
-    ContributionService.prototype.postComment = function (contribution) {
-        var comment = contribution.content;
-        var parent_id = contribution.parent_id;
+    ContributionService.prototype.postComment = function (text, parent) {
+        var comment = text;
+        var parent_id = parent;
         var parameters = { comment: comment, parent_id: parent_id };
-        var headers = new http_1.Headers({
-            'Content-Type': 'application/json'
-        });
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        var token = this.keeper.getToken();
+        headers.append('Authorization', token);
         return this.http
-            .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
+            .post(this.commentUrl, JSON.stringify({ 'comment': comment, 'parent_id': parent_id }), { headers: headers })
             .toPromise()
             .then(function (res) { return res.json().data; })
             .catch(this.handleError);
@@ -116,7 +119,7 @@ var ContributionService = (function () {
     };
     ContributionService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, token_keeper_1.TokenKeeper])
     ], ContributionService);
     return ContributionService;
 }());

@@ -17,6 +17,7 @@ var ContributionDetailComponent = (function () {
         this._contributionService = _contributionService;
         this._routeParams = _routeParams;
         this.close = new core_1.EventEmitter();
+        this.comment = new contribution_1.Contribution();
         this.navigated = false; // true if navigated here
     }
     ContributionDetailComponent.prototype.ngOnInit = function () {
@@ -30,6 +31,9 @@ var ContributionDetailComponent = (function () {
         else {
             this.navigated = false;
         }
+    };
+    ContributionDetailComponent.prototype.postComment = function (text, parent) {
+        this._contributionService.postComment(text, parent);
     };
     __decorate([
         core_1.Input(), 

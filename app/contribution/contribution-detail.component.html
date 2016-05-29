@@ -23,8 +23,12 @@
 			<td></td>
 			<td>
 				<br/>
-				<textarea class="input_comment" ng-model="string"></textarea>
+				<textarea class="input_comment" ng-model="comment.content"></textarea>
+				<button (click)="postComment(comment.content, contribution.id)">Comment</button>
 			</td>
+		</tr>
+		<br/>
+		<tr>
 		</tr>
 	</table>
 </div>

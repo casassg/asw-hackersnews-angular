@@ -12,6 +12,7 @@ export class ContributionDetailComponent implements OnInit {
   @Input() contribution: Contribution;
   @Output() close = new EventEmitter();
   error: any;
+  comment = new Contribution();
   navigated = false; // true if navigated here
 
   constructor(
@@ -28,6 +29,10 @@ export class ContributionDetailComponent implements OnInit {
     } else {
       this.navigated = false;
     }
+  }
+
+  postComment(text:string, parent:number) {
+    this._contributionService.postComment(text, parent);
   }
 }
 

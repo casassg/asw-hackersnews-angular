@@ -4,6 +4,7 @@ import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Contribution } from './contribution';
+import { TokenKeeper } from '../user/token.keeper';
 
 @Injectable()
 export class ContributionService {
@@ -14,7 +15,7 @@ export class ContributionService {
     private commentUrl = 'https://hackersnews.herokuapp.com/api/comments/';
     private replyUrl = 'https://hackersnews.herokuapp.com/api/replies/';
 
-    constructor(private http:Http) {
+    constructor(private http:Http, private keeper:TokenKeeper) {
     }
 
     private toContribution(json:any):Contribution{
@@ -82,16 +83,18 @@ export class ContributionService {
             .catch(this.handleError);
     }
 
-    postComment(contribution:Contribution):Promise<Contribution> {
-        const comment = contribution.content;
-        const parent_id = contribution.parent_id;
+    postComment(text:string, parent:number):Promise<Contribution> {
+        const comment = text;
+        const parent_id = parent;
         let parameters = {comment, parent_id};
-        let headers = new Headers({
-            'Content-Type': 'application/json'
-        });
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let token = this.keeper.getToken();
+        headers.append('Authorization', token);
 
         return this.http
-            .post(this.contributionsUrl, JSON.stringify(parameters), {headers: headers})
+            .post(this.commentUrl, JSON.stringify({'comment':comment, 'parent_id':parent_id}), {headers: headers})
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
