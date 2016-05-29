@@ -36,12 +36,12 @@ var ContributionDetailComponent = (function () {
                 contribution.comments.sort(function (c1, c2) { return (new Date(c1.created_at)).getTime() - (new Date(c2.created_at)).getTime(); });
                 for (var _i = 0, _a = contribution.comments; _i < _a.length; _i++) {
                     var com = _a[_i];
-                    _this._userService.getUser(com.user_id).then(function (user) { return com.user_id = user.id; });
+                    _this._userService.getUser(com.user_id).then(function (user) { return com.user_name = user.name; });
                     _this._contributionService.getComment(com.id).then(function (comment) {
-                        comment.user_id = com.user_id;
+                        comment.user_name = com.user_name;
                         for (var _i = 0, _a = comment.comments; _i < _a.length; _i++) {
                             var rep = _a[_i];
-                            _this._userService.getUser(rep.user_id).then(function (user) { return rep.user_id = user.id; });
+                            _this._userService.getUser(rep.user_id).then(function (user) { return rep.user_name = user.name; });
                         }
                         _this.comments.push(comment);
                     });
@@ -65,6 +65,15 @@ var ContributionDetailComponent = (function () {
     ContributionDetailComponent.prototype.loggedIn = function () {
         return this._contributionService.loggedIn();
     };
+    ContributionDetailComponent.prototype.vote = function (contribution) {
+        this._contributionService.postVote(contribution.id).then(function (vote) {
+            contribution.upvote += 1;
+            contribution.canVote = false;
+        }).catch(function (error) {
+            contribution.canVote = false;
+            alert('You can\'t vote here');
+        });
+    };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', contribution_1.Contribution)
@@ -86,8 +95,8 @@ var ContributionDetailComponent = (function () {
 }());
 exports.ContributionDetailComponent = ContributionDetailComponent;
 /*
-Copyright 2016 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/ 
+ Copyright 2016 Google Inc. All Rights Reserved.
+ Use of this source code is governed by an MIT-style license that
+ can be found in the LICENSE file at http://angular.io/license
+ */ 
 //# sourceMappingURL=contribution-detail.component.js.map

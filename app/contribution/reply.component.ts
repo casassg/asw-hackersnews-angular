@@ -6,9 +6,9 @@ import { Contribution }        from './contribution';
 import { ContributionService } from './contribution.service';
 import { UserService } from '../user/user.service'
 @Component({
-  selector: 'my-contribution-detail',
-  templateUrl: 'contribution/contribution-detail.component.html',
-  styleUrls: ['contribution/contribution-detail.component.css']
+  selector: 'my-reply',
+  templateUrl: 'contribution/reply.component.html',
+  styleUrls: ['contribution/reply.component.css']
 })
 export class ReplyComponent implements OnInit {
   @Input() contribution: Contribution;
@@ -28,9 +28,10 @@ export class ReplyComponent implements OnInit {
     if (this._routeParams.get('id') !== null) {
       let id = +this._routeParams.get('id');
       this.navigated = true;
-      this._contributionService.getPost(id)
+      this._contributionService.getComment(id)
           .then(contribution => {
-                                this._userService.getUser(id).then(user => this.name = user.name)
+                                this._userService.getUser(contribution.user_id).then(user => this.name = user.name);
+                                this.contribution = contribution;
                                 });
     } else {
       this.navigated = false;
