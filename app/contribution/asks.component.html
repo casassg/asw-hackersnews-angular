@@ -7,7 +7,7 @@
     </tr>
     <tr>
         <td>{{contribution.upvote}} points</td>
-        <td> by {{contribution.user_id}}</td>
+        <td> by {{contribution.user.name}}</td>
         <td><a [routerLink]="['ContributionDetail', {'id':contribution.id}]">Comments</a></td>
     </tr>
     <tr><td colspan="3"><hr></td></tr>

@@ -1,7 +1,9 @@
+import { User } from '../user/user';
+
 export class Contribution {
   id: number;
   title: string;
-  id: number;
+  user: User;
   canVote: boolean;
   contr_subtype: string;
   content: string;
