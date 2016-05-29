@@ -52,7 +52,7 @@ var AppComponent = (function () {
         core_1.Component({
             selector: 'my-app',
             template: "\n    <h1>{{title}}</h1>\n    <nav>\n      <a [routerLink]=\"['Dashboard']\">Dashboard</a>\n      <!--<a [routerLink]=\"['Newest']\">Newest</a>-->\n      <a [routerLink]=\"['ContributionDetail', {'id':'5'}]\">Contribution 5 (test)</a>\n      <a [routerLink]=\"['UserDetail',{id:1}]\">Usuari 1 (test)</a>\n      <a *ngIf=\"loggedIn\" [routerLink]=\"['MeDetail']\">Me</a>\n      <a *ngIf=\"!loggedIn\" [href]='login_url'>Login</a>\n      <a *ngIf=\"loggedIn\" (click)='logout()'>Logout</a>\n    </nav>\n    <router-outlet></router-outlet>\n  ",
-            styleUrls: ['app/app.component.css'],
+            styleUrls: ['app.component.css'],
             directives: [router_deprecated_1.ROUTER_DIRECTIVES],
             providers: [
                 router_deprecated_1.ROUTER_PROVIDERS,
