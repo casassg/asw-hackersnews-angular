@@ -9,7 +9,7 @@ import { MeDetailComponent } from './user/me.component';
 import { HeroService }         from './hero.service';
 import { ContributionService } from './contribution/contribution.service';
 import { ContributionDetailComponent } from './contribution/contribution-detail.component';
-/*import { Newest } from './newest.component';*/
+import { AsksComponent } from './contribution/asks.component';
 import { UserService }         from './user/user.service';
 import { TokenKeeper }         from './user/token.keeper';
 import { setCookie, getCookie }         from './user/cookies.helper';
@@ -21,7 +21,7 @@ import { setCookie, getCookie }         from './user/cookies.helper';
     <h1>{{title}}</h1>
     <nav>
       <a [routerLink]="['Dashboard']">Dashboard</a>
-      <!--<a [routerLink]="['Newest']">Newest</a>-->
+      <a [routerLink]="['Asks']">Asks</a>
       <a [routerLink]="['ContributionDetail', {'id':'5'}]">Contribution 5 (test)</a>
       <a [routerLink]="['ContributionDetail', {'id':'1'}]">Contribution 1 (test)</a>
       <a [routerLink]="['UserDetail',{id:1}]">Usuari 1 (test)</a>
@@ -46,7 +46,7 @@ import { setCookie, getCookie }         from './user/cookies.helper';
   { path: '/user/:id',     name: 'UserDetail',     component: UserDetailComponent },
   { path: '/me',     name: 'MeDetail',     component: MeDetailComponent},
   { path: '/contribution/:id', name: 'ContributionDetail', component: ContributionDetailComponent },
-  /*{ path: '/newest', name: 'Newest', component: NewestComponent }*/
+  { path: '/asks', name: 'Asks', component: AsksComponent }
 ])
 
 export class AppComponent  implements OnInit {
