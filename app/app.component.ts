@@ -35,7 +35,7 @@ import { setCookie, getCookie }         from './user/cookies.helper';
   ]
 })
 @RouteConfig([
-  { path: '/dashboard',  name: 'Dashboard',  component: DashboardComponent },
+  { path: '/dashboard',  name: 'Dashboard',  component: DashboardComponent, useAsDefault: true},
   { path: '/user/:id',     name: 'UserDetail',     component: UserDetailComponent },
   { path: '/me',     name: 'MeDetail',     component: MeDetailComponent}
 ])
@@ -60,7 +60,7 @@ export class AppComponent  implements OnInit {
       this.keeper.setToken(token);
     }
 
-    this.router.navigate(['Dashboard']);
+    //this.router.navigate(['Dashboard']);
     this.loggedIn = this.keeper.isLoggedIn();
   }
 
