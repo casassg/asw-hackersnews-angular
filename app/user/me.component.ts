@@ -5,15 +5,13 @@ import { User }        from './user';
 import { UserService } from './user.service';
 @Component({
   selector: 'my-user-detail',
-  templateUrl: 'app/user-detail.component.html',
-  styleUrls: ['app/user-detail.component.css']
+  templateUrl: 'app/user/me.component.html',
+  styleUrls: ['app/user/me.component.css']
 })
-export class UserDetailComponent implements OnInit {
+export class MeDetailComponent implements OnInit {
   @Input() user: User;
   @Output() close = new EventEmitter();
   error: any;
-  navigated = false; // true if navigated here
-  token = '';
 
   constructor(
     private _userService: UserService,
@@ -21,17 +19,8 @@ export class UserDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    if (this._routeParams.get('id') !== null) {
-      let id = +this._routeParams.get('id');
-      this.navigated = true;
-      this._userService.getUser(id)
+      this._userService.getMe()
           .then(user => this.user = user);
-    } else {
-      this.navigated = false;
-      this.user = new User();
-      this.token = this._routeParams.get('token');
-    }
   }
 }
 

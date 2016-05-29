@@ -4,25 +4,40 @@ import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { User } from './user';
+import { TokenKeeper } from './token.keeper';
 
 @Injectable()
 export class UserService {
 
   private userUrl = 'http://hackersnews.herokuapp.com/api/users/';  // URL to web api
+  private meUrl = 'http://hackersnews.herokuapp.com/api/me/';  // URL to web api
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private keeper: TokenKeeper) { }
 
   getUser(id: number): Promise<User> {
     return this.http.get(this.userUrl+id)
                .toPromise()
                .then(response => {
-               	let data = response.json().data
-               	console.log(response.json());
-               	console.log(data);
                	return response.json()
                })
                .catch(this.handleError);
   }
+
+  getMe(): Promise<User> {
+    let headers = new Headers();
+    let token = this.keeper.getToken();
+    if(!token){
+      this.handleError("NOT LOGGED IN! YOU NEED TO LOGIN BEFORE THIS!")
+    }
+    headers.append('Authorization',token );
+    return this.http.get(this.meUrl, {headers:headers})
+               .toPromise()
+               .then(response => {
+                return response.json()
+               })
+               .catch(this.handleError);
+  }
+
 
   update(user : User): Promise<User> {
 	let headers = new Headers();
