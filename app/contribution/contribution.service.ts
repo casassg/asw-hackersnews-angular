@@ -109,7 +109,7 @@ export class ContributionService {
         return this.http
             .post(this.commentUrl, JSON.stringify(parameters), {headers: headers})
             .toPromise()
-            .then(res => res.json().data)
+            .then(res => res.json())
             .catch(this.handleError);
     }
 
@@ -121,10 +121,10 @@ export class ContributionService {
             .catch(this.handleError);
     }
 
-    postReply(contribution:Contribution):Promise<Contribution> {
-        const reply = contribution.content;
-        const parent_id = contribution.parent_id;
-        let parameters = {'parent_id':contribution.parent_id, 'reply':contribution.content};
+    postReply(text:string, parentid:number):Promise<Contribution> {
+        const reply = text;
+        const parent_id = parentid;
+        let parameters = {'parent_id':parent_id, 'reply':reply};
         let headers = new Headers({
             'Content-Type': 'application/json'
         });

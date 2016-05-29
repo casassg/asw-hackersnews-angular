@@ -1,5 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { RouteParams } from '@angular/router-deprecated';
+import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Contribution }        from './contribution';
 import { ContributionService } from './contribution.service';
@@ -7,7 +8,8 @@ import { UserService } from '../user/user.service'
 @Component({
   selector: 'my-contribution-detail',
   templateUrl: 'contribution/contribution-detail.component.html',
-  styleUrls: ['contribution/contribution-detail.component.css']
+  styleUrls: ['contribution/contribution-detail.component.css'],
+  directives: [ROUTER_DIRECTIVES],
 })
 export class ContributionDetailComponent implements OnInit {
   @Input() contribution: Contribution;
@@ -21,7 +23,8 @@ export class ContributionDetailComponent implements OnInit {
   constructor(
     private _contributionService: ContributionService,
     private _routeParams: RouteParams,
-    private _userService: UserService) {
+    private _userService: UserService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -50,7 +53,12 @@ export class ContributionDetailComponent implements OnInit {
   }
 
   postComment(text:string, parent:number) {
-    this._contributionService.postComment(text, parent);
+      console.log(text);
+    this._contributionService.postComment(text, parent).then(comment=>{
+        console.log(comment);
+        this.comments.push(comment);
+        this.comment = new Contribution();
+    })
 
   }
 

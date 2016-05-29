@@ -2,6 +2,7 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 import { Contribution }        from './contribution';
 import { ContributionService } from './contribution.service';
+import { UserService } from '../user/user.service';
 @Component({
     selector: 'asks',
     templateUrl: 'contribution/asks.component.html',
@@ -13,11 +14,20 @@ export class AsksComponent implements OnInit {
     error: any;
 
     constructor(private router: Router,
-        private _contributionService: ContributionService) {
+        private _contributionService: ContributionService, private _userService: UserService) {
     }
 
     ngOnInit() {
-        this._contributionService.getAsks().then(asks => this.asks = asks);
+        this._contributionService.getAsks().then(asks => {
+            let ret = [];
+            for (let ask of asks) {
+                this._userService.getUser(ask.user_id).then(user => {
+                    ask.user = user;
+                    ret.push(ask);
+                    this.asks = ret;
+                })
+            }
+        });
     }
 
 

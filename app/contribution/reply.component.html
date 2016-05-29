@@ -1,4 +1,4 @@
-<div *ngIf="contribution">
+<div>
 	<br/>
 	<table>
 		<tr class="athing">
@@ -14,7 +14,8 @@
 				</div>
 				<p>{{contribution.upvote}} points by 
 				<a href="#">{{name}}</a> created at 
-				<a href="#">{{contribution.created_at}}</a></p>
+				<a href="#">{{contribution.created_at}}</a> | 
+				<a href="#">{{contribution.comments.length}} comments</a></p>
 				<p *ngIf="contribution.contr_subtype == 'text'">{{contribution.content}}</p>
 		</tr>
 		<tr style="height:20px">
@@ -24,29 +25,9 @@
 				<br/>
 				<span *ngIf="loggedIn()">
 					<textarea class="input_comment" [(ngModel)]="comment.content"></textarea>
-					<button (click)="postComment(comment.content, contribution.id)">Comment</button>
+					<button (click)="postReply(comment.content, contribution.id)">Reply</button>
 				</span>
 			</td>
-		</tr>
-		<tr *ngFor="let comment of comments">
-			<td></td>
-			<td></td>
-			<td>
-				<br/>
-				{{comment.user_name}} created at {{comment.created_at}}<br/>
-				{{comment.content}}<br/>
-				{{comment.upvote}} votes <a [routerLink]="['Reply', {'id':comment.id}]" *ngIf="loggedIn()">reply</a>
-				<br/>
-				<div class="reply" *ngFor="let reply of comment.comments">
-					<br/>
-					{{reply.user_name}} created at {{reply.created_at}}<br/>
-					{{reply.content}}<br/>
-					{{reply.upvote}} votes
-				</div>
-			</td>
-		</tr>
-		<br/>
-		<tr>
 		</tr>
 	</table>
 </div>

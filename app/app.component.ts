@@ -13,6 +13,7 @@ import { NewestComponent } from './contribution/newest.component';
 import { AsksComponent } from './contribution/asks.component';
 import { UserService }         from './user/user.service';
 import { TokenKeeper }         from './user/token.keeper';
+import { ReplyComponent } from './contribution/reply.component';
 import { setCookie, getCookie }         from './user/cookies.helper';
 
 @Component({
@@ -49,13 +50,14 @@ import { setCookie, getCookie }         from './user/cookies.helper';
   { path: '/me',     name: 'MeDetail',     component: MeDetailComponent},
   { path: '/contribution/:id', name: 'ContributionDetail', component: ContributionDetailComponent },
   { path: '/newest', name: 'Newest', component: NewestComponent },
-  { path: '/asks', name: 'Asks', component: AsksComponent }
+  { path: '/asks', name: 'Asks', component: AsksComponent },
+  { path: '/reply/:id', name: 'Reply', component: ReplyComponent },
 ])
 
 export class AppComponent  implements OnInit {
   
 
-  constructor(private router: Router, private keeper: TokenKeeper) {
+  constructor(private router: Router, private keeper: TokenKeeper, private userServ: UserService) {
   }
   title = 'Hackers News';
   host = window.location.host;
@@ -75,6 +77,11 @@ export class AppComponent  implements OnInit {
 
     //this.router.navigate(['Dashboard']);
     this.loggedIn = this.keeper.isLoggedIn();
+    if (this.loggedIn){
+      this.userServ.getMe().then(user=>{
+        this.keeper.registerUser(user);
+      })
+    }
   }
 
   logout() {
