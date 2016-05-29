@@ -42,8 +42,8 @@ var ContributionDetailComponent = (function () {
     ContributionDetailComponent = __decorate([
         core_1.Component({
             selector: 'my-contribution-detail',
-            templateUrl: 'app/contribution-detail.component.html',
-            styleUrls: ['app/contribution-detail.component.css']
+            templateUrl: 'contribution/contribution-detail.component.html',
+            styleUrls: ['contribution/contribution-detail.component.css']
         }), 
         __metadata('design:paramtypes', [contribution_service_1.ContributionService, router_deprecated_1.RouteParams])
     ], ContributionDetailComponent);

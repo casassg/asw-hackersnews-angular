@@ -20,10 +20,17 @@ var ContributionService = (function () {
         this.commentUrl = 'http://hackersnews.herokuapp.com/api/comments/';
         this.replyUrl = 'http://hackersnews.herokuapp.com/api/replies/';
     }
+    ContributionService.prototype.toContribution = function (json) {
+        var contribution = json.contribution;
+        console.log(contribution);
+        return contribution;
+    };
     ContributionService.prototype.getAsks = function () {
         return this.http.get(this.askUrl)
             .toPromise()
-            .then(function (response) { return response.json().data; })
+            .then(function (response) {
+            return response.json().data;
+        })
             .catch(this.handleError);
     };
     ContributionService.prototype.getUrls = function () {
@@ -33,15 +40,20 @@ var ContributionService = (function () {
             .catch(this.handleError);
     };
     ContributionService.prototype.getPost = function (id) {
+<<<<<<< HEAD
+=======
+        var _this = this;
+>>>>>>> 9740b828ae3e64707b2da0ce262ed1dfd9485171
         return this.http.get(this.contributionsUrl + id)
             .toPromise()
-            .then(function (response) { return response.json().data; })
+            .then(function (response) { return _this.toContribution(response.json()); })
             .catch(this.handleError);
     };
     ContributionService.prototype.postPost = function (contribution) {
         var title = contribution.title;
         var headers = new http_1.Headers({
-            'Content-Type': 'application/json' });
+            'Content-Type': 'application/json'
+        });
         if (contribution.contr_subtype == 'url') {
             var url = contribution.url;
             var parameters = { title: title, url: url };
@@ -73,7 +85,8 @@ var ContributionService = (function () {
         var parent_id = contribution.parent_id;
         var parameters = { comment: comment, parent_id: parent_id };
         var headers = new http_1.Headers({
-            'Content-Type': 'application/json' });
+            'Content-Type': 'application/json'
+        });
         return this.http
             .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
             .toPromise()
@@ -92,7 +105,8 @@ var ContributionService = (function () {
         var parent_id = contribution.parent_id;
         var parameters = { parent_id: parent_id, reply: reply };
         var headers = new http_1.Headers({
-            'Content-Type': 'application/json' });
+            'Content-Type': 'application/json'
+        });
         return this.http
             .post(this.replyUrl, JSON.stringify(parameters), { headers: headers })
             .toPromise()

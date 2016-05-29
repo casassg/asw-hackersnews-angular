@@ -5,8 +5,8 @@ import { Contribution }        from './contribution';
 import { ContributionService } from './contribution.service';
 @Component({
   selector: 'my-contribution-detail',
-  templateUrl: 'app/contribution-detail.component.html',
-  styleUrls: ['app/contribution-detail.component.css']
+  templateUrl: 'contribution/contribution-detail.component.html',
+  styleUrls: ['contribution/contribution-detail.component.css']
 })
 export class ContributionDetailComponent implements OnInit {
   @Input() contribution: Contribution;
