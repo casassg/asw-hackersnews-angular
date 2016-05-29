@@ -8,6 +8,7 @@ export class Contribution {
   contr_subtype: string;
   content: string;
   user_id: any;
+  user_name:string;
   url: string;
   parent_id: number;
   upvote: number;
