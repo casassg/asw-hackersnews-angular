@@ -16,6 +16,7 @@ var hero_detail_component_1 = require('./hero-detail.component');
 var hero_service_1 = require('./hero.service');
 var contribution_service_1 = require('./contribution.service');
 var contribution_detail_component_1 = require('./contribution-detail.component');
+var newest_component = require('./newest.component');
 var AppComponent = (function () {
     function AppComponent() {
         this.title = 'HackerNews';
@@ -23,7 +24,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "\n    <h1>{{title}}</h1>\n    <nav>\n      <a [routerLink]=\"['Dashboard']\">Dashboard</a>\n      <a [routerLink]=\"['Heroes']\">Heroes</a>\n      <a [routerLink]=\"['ContributionDetail', {'id':'5'}]\">Contribution 5 (test)</a>\n    </nav>\n    <router-outlet></router-outlet>\n  ",
+            template: "\n    <h1>{{title}}</h1>\n    <nav>\n      <a [routerLink]=\"['Dashboard']\">Dashboard</a>\n      <a [routerLink]=\"['Heroes']\">Heroes</a>\n  <a [routerLink]=\"['Newest']\">Newest</a>\n      <a [routerLink]=\"['ContributionDetail', {'id':'5'}]\">Contribution 5 (test)</a>\n    </nav>\n    <router-outlet></router-outlet>\n  ",
             styleUrls: ['app/app.component.css'],
             directives: [router_deprecated_1.ROUTER_DIRECTIVES],
             providers: [
@@ -37,6 +38,7 @@ var AppComponent = (function () {
             { path: '/detail/:id', name: 'HeroDetail', component: hero_detail_component_1.HeroDetailComponent },
             { path: '/heroes', name: 'Heroes', component: heroes_component_1.HeroesComponent },
             { path: '/contribution/:id', name: 'ContributionDetail', component: contribution_detail_component_1.ContributionDetailComponent }
+            { path: '/newest', name: 'Newest', component: newest_component.NewestComponent },
         ]), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

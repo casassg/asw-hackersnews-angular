@@ -7,6 +7,7 @@ import { HeroDetailComponent } from './hero-detail.component';
 import { HeroService }         from './hero.service';
 import { ContributionService } from './contribution.service'
 import { ContributionDetailComponent } from './contribution-detail.component'
+import { Newest } from './newest.component'
 
 @Component({
   selector: 'my-app',
@@ -16,10 +17,10 @@ import { ContributionDetailComponent } from './contribution-detail.component'
     <nav>
       <a [routerLink]="['Dashboard']">Dashboard</a>
       <a [routerLink]="['Heroes']">Heroes</a>
+      <a [routerLink]="['Newest']">Newest</a>
       <a [routerLink]="['ContributionDetail', {'id':'5'}]">Contribution 5 (test)</a>
     </nav>
     <router-outlet></router-outlet>
-  `,
   styleUrls: ['app/app.component.css'],
   directives: [ROUTER_DIRECTIVES],
   providers: [
@@ -32,7 +33,8 @@ import { ContributionDetailComponent } from './contribution-detail.component'
   { path: '/dashboard',  name: 'Dashboard',  component: DashboardComponent, useAsDefault: true },
   { path: '/detail/:id', name: 'HeroDetail', component: HeroDetailComponent },
   { path: '/heroes',     name: 'Heroes',     component: HeroesComponent },
-  { path: '/contribution/:id', name: 'ContributionDetail', component: ContributionDetailComponent }
+  { path: '/contribution/:id', name: 'ContributionDetail', component: ContributionDetailComponent },
+  { path: '/newest', name: 'Newest', component: NewestComponent }
 ])
 export class AppComponent {
   title = 'HackerNews';
