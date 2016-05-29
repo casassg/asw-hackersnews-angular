@@ -22,7 +22,6 @@ import { setCookie, getCookie }         from './user/cookies.helper';
   template: `
     <h1>{{title}}</h1>
     <nav>
-      <a [routerLink]="['Dashboard']">Dashboard</a>
       <a [routerLink]="['Newest']">Newest</a>
       <a [routerLink]="['Asks']">Asks</a>
       <a *ngIf="loggedIn" [routerLink]="['MeDetail']">Me</a>
@@ -42,11 +41,10 @@ import { setCookie, getCookie }         from './user/cookies.helper';
   ]
 })
 @RouteConfig([
-  { path: '/dashboard',  name: 'Dashboard',  component: DashboardComponent, useAsDefault: true },
   { path: '/user/:id',     name: 'UserDetail',     component: UserDetailComponent },
   { path: '/me',     name: 'MeDetail',     component: MeDetailComponent},
   { path: '/contribution/:id', name: 'ContributionDetail', component: ContributionDetailComponent },
-  { path: '/newest', name: 'Newest', component: NewestComponent },
+  { path: '/newest', name: 'Newest', component: NewestComponent,  useAsDefault: true },
   { path: '/asks', name: 'Asks', component: AsksComponent },
   { path: '/reply/:id', name: 'Reply', component: ReplyComponent },
 ])
