@@ -4,8 +4,8 @@ import { RouteParams } from '@angular/router-deprecated';
 import { Contribution }        from './contribution/contribution';
 import { ContributionService } from './contribution/contribution.service';
 @Component({
-  selector: 'my-newest',
-  templateUrl: 'app/newest.html',
+  selector: 'my-newest-detail',
+  templateUrl: 'app/newest.component.html',
   styleUrls: ['app/newest.component.css']
 })
 export class NewestComponent implements OnInit {
@@ -18,8 +18,8 @@ export class NewestComponent implements OnInit {
   }
 
   ngOnInit() {
-    var _this = this;
-    return this._contributionService.getUrls()
+    this _contributionService.getUrls()
+              .then(contributions => this.contributions = contributions);
   }
 }
 

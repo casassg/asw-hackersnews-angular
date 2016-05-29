@@ -11,9 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/toPromise');
+var token_keeper_1 = require('../user/token.keeper');
 var ContributionService = (function () {
-    function ContributionService(http) {
+    function ContributionService(http, keeper) {
         this.http = http;
+        this.keeper = keeper;
         this.contributionsUrl = 'https://hackersnews.herokuapp.com/api/posts/'; // URL to web api
         this.askUrl = 'https://hackersnews.herokuapp.com/api/posts/ask/';
         this.urlUrl = 'https://hackersnews.herokuapp.com/api/posts/url/';
@@ -21,30 +23,37 @@ var ContributionService = (function () {
         this.replyUrl = 'https://hackersnews.herokuapp.com/api/replies/';
         this.newVote = 'https://hackersnews.herokuapp.com/api/votes/';
     }
-    ContributionService.prototype.toContribution = function (json) {
+    ContributionService.prototype.toPost = function (json) {
         var contribution = json.contribution;
-        console.log(contribution);
+        contribution.comments = json.comments;
+        return contribution;
+    };
+    ContributionService.prototype.toComment = function (json) {
+        var contribution = json.contribution;
+        contribution.comments = json.replies;
         return contribution;
     };
     ContributionService.prototype.getAsks = function () {
         return this.http.get(this.askUrl)
             .toPromise()
             .then(function (response) {
-            return response.json().data;
+            return response.json();
         })
             .catch(this.handleError);
     };
     ContributionService.prototype.getUrls = function () {
         return this.http.get(this.urlUrl)
             .toPromise()
-            .then(function (response) { return response.json().data; })
+            .then(function (response) {
+            return response.json();
+        })
             .catch(this.handleError);
     };
     ContributionService.prototype.getPost = function (id) {
         var _this = this;
         return this.http.get(this.contributionsUrl + id)
             .toPromise()
-            .then(function (response) { return _this.toContribution(response.json()); })
+            .then(function (response) { return _this.toPost(response.json()); })
             .catch(this.handleError);
     };
     ContributionService.prototype.postPost = function (contribution) {
@@ -52,41 +61,48 @@ var ContributionService = (function () {
         var headers = new http_1.Headers({
             'Content-Type': 'application/json'
         });
+        var token = this.keeper.getToken();
+        if (!token) {
+            this.handleError("NOT LOGGED IN! YOU NEED TO LOGIN BEFORE THIS!");
+        }
+        headers.append('Authorization', token);
         if (contribution.contr_subtype == 'url') {
-            var url = contribution.url;
-            var parameters = { title: title, url: url };
+            var parameters = { 'title': contribution.title, 'url': contribution.url };
             return this.http
                 .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
                 .toPromise()
-                .then(function (res) { return res.json().data; })
+                .then(function (res) { return res.json(); })
                 .catch(this.handleError);
         }
         else {
             var content = contribution.content;
-            var parameters = { title: title, content: content };
+            var parameters = { 'title': contribution.title, 'content': contribution.content };
             return this.http
                 .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
                 .toPromise()
-                .then(function (res) { return res.json().data; })
+                .then(function (res) { return res.json(); })
                 .catch(this.handleError);
         }
     };
     ContributionService.prototype.getComment = function (id) {
+        var _this = this;
         var url = this.commentUrl + "/" + id;
         return this.http.get(url)
             .toPromise()
-            .then(function (response) { return response.json().data; })
+            .then(function (response) { return _this.toComment(response.json()); })
             .catch(this.handleError);
     };
-    ContributionService.prototype.postComment = function (contribution) {
-        var comment = contribution.content;
-        var parent_id = contribution.parent_id;
-        var parameters = { comment: comment, parent_id: parent_id };
-        var headers = new http_1.Headers({
-            'Content-Type': 'application/json'
-        });
+    ContributionService.prototype.postComment = function (text, parent) {
+        var parameters = { 'comment': text, 'parent_id': parent };
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        var token = this.keeper.getToken();
+        if (!token) {
+            this.handleError("NOT LOGGED IN! YOU NEED TO LOGIN BEFORE THIS!");
+        }
+        headers.append('Authorization', token);
         return this.http
-            .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
+            .post(this.commentUrl, JSON.stringify(parameters), { headers: headers })
             .toPromise()
             .then(function (res) { return res.json().data; })
             .catch(this.handleError);
@@ -95,30 +111,44 @@ var ContributionService = (function () {
         var url = this.replyUrl + "/" + id;
         return this.http.get(url)
             .toPromise()
-            .then(function (response) { return response.json().data; })
+            .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     ContributionService.prototype.postReply = function (contribution) {
         var reply = contribution.content;
         var parent_id = contribution.parent_id;
-        var parameters = { parent_id: parent_id, reply: reply };
+        var parameters = { 'parent_id': contribution.parent_id, 'reply': contribution.content };
         var headers = new http_1.Headers({
             'Content-Type': 'application/json'
         });
+        var token = this.keeper.getToken();
+        if (!token) {
+            this.handleError("NOT LOGGED IN! YOU NEED TO LOGIN BEFORE THIS!");
+        }
+        headers.append('Authorization', token);
         return this.http
             .post(this.replyUrl, JSON.stringify(parameters), { headers: headers })
             .toPromise()
-            .then(function (res) { return res.json().data; })
+            .then(function (res) { return res.json(); })
             .catch(this.handleError);
     };
     ContributionService.prototype.postVote = function (id) {
         var headers = new http_1.Headers({
             'Content-Type': 'application/json' });
+        var token = this.keeper.getToken();
+        if (!token) {
+            this.handleError("NOT LOGGED IN! YOU NEED TO LOGIN BEFORE THIS!");
+        }
+        headers.append('Authorization', token);
+        var parameters = { 'contribution_id': id };
         return this.http
-            .post(this.newVote, JSON.stringify(id), { headers: headers })
+            .post(this.newVote, JSON.stringify(parameters), { headers: headers })
             .toPromise()
-            .then(function (res) { return res.json().data; })
+            .then(function (res) { return res.json(); })
             .catch(this.handleError);
+    };
+    ContributionService.prototype.loggedIn = function () {
+        return this.keeper.isLoggedIn();
     };
     ContributionService.prototype.handleError = function (error) {
         console.error('An error occurred', error);
@@ -126,7 +156,7 @@ var ContributionService = (function () {
     };
     ContributionService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, token_keeper_1.TokenKeeper])
     ], ContributionService);
     return ContributionService;
 }());

@@ -12,24 +12,49 @@ var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var contribution_1 = require('./contribution');
 var contribution_service_1 = require('./contribution.service');
+var user_service_1 = require('../user/user.service');
 var ContributionDetailComponent = (function () {
-    function ContributionDetailComponent(_contributionService, _routeParams) {
+    function ContributionDetailComponent(_contributionService, _routeParams, _userService) {
         this._contributionService = _contributionService;
         this._routeParams = _routeParams;
+        this._userService = _userService;
         this.close = new core_1.EventEmitter();
+        this.comment = new contribution_1.Contribution();
         this.navigated = false; // true if navigated here
     }
     ContributionDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
         if (this._routeParams.get('id') !== null) {
-            var id = +this._routeParams.get('id');
+            this.comments = [];
+            var id_1 = +this._routeParams.get('id');
             this.navigated = true;
-            this._contributionService.getPost(id)
-                .then(function (contribution) { return _this.contribution = contribution; });
+            this._contributionService.getPost(id_1)
+                .then(function (contribution) {
+                _this._userService.getUser(id_1).then(function (user) { return _this.name = user.name; });
+                for (var _i = 0, _a = contribution.comments; _i < _a.length; _i++) {
+                    var com = _a[_i];
+                    _this._userService.getUser(com.user_id).then(function (user) { return com.user_id = user.name; });
+                    _this._contributionService.getComment(com.id).then(function (comment) {
+                        comment.user_id = com.user_id;
+                        for (var _i = 0, _a = comment.comments; _i < _a.length; _i++) {
+                            var rep = _a[_i];
+                            _this._userService.getUser(rep.user_id).then(function (user) { return rep.user_id = user.name; });
+                        }
+                        _this.comments.push(comment);
+                    });
+                }
+                _this.contribution = contribution;
+            });
         }
         else {
             this.navigated = false;
         }
+    };
+    ContributionDetailComponent.prototype.postComment = function (text, parent) {
+        this._contributionService.postComment(text, parent);
+    };
+    ContributionDetailComponent.prototype.loggedIn = function () {
+        return this._contributionService.loggedIn();
     };
     __decorate([
         core_1.Input(), 
@@ -45,7 +70,7 @@ var ContributionDetailComponent = (function () {
             templateUrl: 'contribution/contribution-detail.component.html',
             styleUrls: ['contribution/contribution-detail.component.css']
         }), 
-        __metadata('design:paramtypes', [contribution_service_1.ContributionService, router_deprecated_1.RouteParams])
+        __metadata('design:paramtypes', [contribution_service_1.ContributionService, router_deprecated_1.RouteParams, user_service_1.UserService])
     ], ContributionDetailComponent);
     return ContributionDetailComponent;
 }());

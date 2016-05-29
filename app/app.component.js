@@ -16,7 +16,7 @@ var me_component_1 = require('./user/me.component');
 var hero_service_1 = require('./hero.service');
 var contribution_service_1 = require('./contribution/contribution.service');
 var contribution_detail_component_1 = require('./contribution/contribution-detail.component');
-/*import { Newest } from './newest.component';*/
+var newest_component_1 = require('./newest.component');
 var user_service_1 = require('./user/user.service');
 var token_keeper_1 = require('./user/token.keeper');
 var cookies_helper_1 = require('./user/cookies.helper');
@@ -51,7 +51,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "\n    <h1>{{title}}</h1>\n    <nav>\n      <a [routerLink]=\"['Dashboard']\">Dashboard</a>\n      <!--<a [routerLink]=\"['Newest']\">Newest</a>-->\n      <a [routerLink]=\"['ContributionDetail', {'id':'5'}]\">Contribution 5 (test)</a>\n      <a [routerLink]=\"['ContributionDetail', {'id':'1'}]\">Contribution 1 (test)</a>\n      <a [routerLink]=\"['UserDetail',{id:1}]\">Usuari 1 (test)</a>\n      <a *ngIf=\"loggedIn\" [routerLink]=\"['MeDetail']\">Me</a>\n      <a *ngIf=\"!loggedIn\" [href]='login_url'>Login</a>\n      <a *ngIf=\"loggedIn\" (click)='logout()'>Logout</a>\n    </nav>\n    <router-outlet></router-outlet>\n  ",
+            template: "\n    <h1>{{title}}</h1>\n    <nav>\n      <a [routerLink]=\"['Dashboard']\">Dashboard</a>\n      <a [routerLink]=\"['Newest']\">Newest</a>\n      <a [routerLink]=\"['ContributionDetail', {'id':'5'}]\">Contribution 5 (test)</a>\n      <a [routerLink]=\"['ContributionDetail', {'id':'1'}]\">Contribution 1 (test)</a>\n      <a [routerLink]=\"['UserDetail',{id:1}]\">Usuari 1 (test)</a>\n      <a *ngIf=\"loggedIn\" [routerLink]=\"['MeDetail']\">Me</a>\n      <a *ngIf=\"!loggedIn\" [href]='login_url'>Login</a>\n      <a *ngIf=\"loggedIn\" (click)='logout()'>Logout</a>\n    </nav>\n    <router-outlet></router-outlet>\n  ",
             styleUrls: ['app.component.css'],
             directives: [router_deprecated_1.ROUTER_DIRECTIVES],
             providers: [
@@ -67,6 +67,7 @@ var AppComponent = (function () {
             { path: '/user/:id', name: 'UserDetail', component: user_detail_component_1.UserDetailComponent },
             { path: '/me', name: 'MeDetail', component: me_component_1.MeDetailComponent },
             { path: '/contribution/:id', name: 'ContributionDetail', component: contribution_detail_component_1.ContributionDetailComponent },
+            { path: '/newest', name: 'Newest', component: newest_component_1.NewestComponent }
         ]), 
         __metadata('design:paramtypes', [router_deprecated_1.Router, token_keeper_1.TokenKeeper])
     ], AppComponent);
