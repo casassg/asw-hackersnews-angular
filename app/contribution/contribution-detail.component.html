@@ -15,7 +15,7 @@
 				<p>{{contribution.upvote}} points by 
 				<a href="#">{{contribution.user_id}}</a> created at 
 				<a href="#">{{contribution.created_at}}</a> | 
-				<!--<a href="#">{{contribution.comments.length}} comments</a></p>-->
+				<a href="#">{{contribution.comments}}</a></p>
 				<p *ngIf="contribution.contr_subtype == 'text'">{{contribution.content}}</p>
 		</tr>
 		<tr style="height:20px">
