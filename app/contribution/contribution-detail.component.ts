@@ -32,12 +32,12 @@ export class ContributionDetailComponent implements OnInit {
       this._contributionService.getPost(id)
           .then(contribution => {
                                 this._userService.getUser(id).then(user => this.name = user.name);
-                                contribution.comments.sort((c1,c2) => c1.created_at - c2.created_at);
+                                contribution.comments.sort((c1,c2) => (new Date(c1.created_at)).getTime() - (new Date(c2.created_at)).getTime());
                                 for (var com of contribution.comments) {
-                                  this._userService.getUser(com.user_id).then(user => com.user_id = user.name);
+                                  this._userService.getUser(com.user_id).then(user => com.user_id = user.id);
                                   this._contributionService.getComment(com.id).then(comment => {comment.user_id = com.user_id;
                                                                                                 for (var rep of comment.comments) {
-                                                                                                  this._userService.getUser(rep.user_id).then(user => rep.user_id = user.name);
+                                                                                                  this._userService.getUser(rep.user_id).then(user => rep.user_id = user.id);
                                                                                                 }
                                                                                                 this.comments.push(comment);
                                                                                                 });

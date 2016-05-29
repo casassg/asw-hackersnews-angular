@@ -44,9 +44,7 @@ var ContributionService = (function () {
     ContributionService.prototype.getUrls = function () {
         return this.http.get(this.urlUrl)
             .toPromise()
-            .then(function (response) {
-            return response.json();
-        })
+            .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     ContributionService.prototype.getPost = function (id) {

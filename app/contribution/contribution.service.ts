@@ -45,9 +45,7 @@ export class ContributionService {
     getUrls():Promise<Contribution[]> {
         return this.http.get(this.urlUrl)
             .toPromise()
-            .then(response => {
-                return response.json()
-            })
+            .then(response => response.json())
             .catch(this.handleError);
     }
 

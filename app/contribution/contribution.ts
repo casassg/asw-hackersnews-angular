@@ -1,6 +1,7 @@
 export class Contribution {
-  id: number;
   title: string;
+  id: number;
+  canVote: boolean;
   contr_subtype: string;
   content: string;
   user_id: number;
