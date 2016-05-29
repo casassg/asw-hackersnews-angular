@@ -16,11 +16,20 @@ export class NewestComponent implements OnInit {
 
   constructor(
     private _contributionService: ContributionService,
-    private router: Router) {
+    private _userService: UserService) {
   }
 
   ngOnInit() {
-    this._contributionService.getUrls().then(contributions => this.contributions = contributions);
+    this._contributionService.getUrls().then(asks => {
+        let ret = [];
+        for (let ask of asks) {
+            this._userService.getUser(ask.user_id).then(user => {
+                ask.user = user;
+                ret.push(ask);
+                this.contributions = ret;
+            })
+        }
+    });
   }
 
 
