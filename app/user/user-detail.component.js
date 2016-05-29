@@ -45,8 +45,8 @@ var UserDetailComponent = (function () {
     UserDetailComponent = __decorate([
         core_1.Component({
             selector: 'my-user-detail',
-            templateUrl: 'app/user/user-detail.component.html',
-            styleUrls: ['app/user/user-detail.component.css']
+            templateUrl: 'user/user-detail.component.html',
+            styleUrls: ['user/user-detail.component.css']
         }), 
         __metadata('design:paramtypes', [user_service_1.UserService, router_deprecated_1.RouteParams])
     ], UserDetailComponent);

@@ -20,9 +20,8 @@
 
   //packages tells the System loader how to load when no filename and/or no extension
   var packages = {
-    'app':                        { main: 'main.ts',  defaultExtension: 'ts' },
+    'app':                        { main: 'app/main.js',  defaultExtension: 'js' },
     'rxjs':                       { defaultExtension: 'js' },
-    'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' }
   };
 
   var ngPackageNames = [
@@ -66,9 +65,13 @@
     },
     map: map,
     packages: packages
-  }
+  };
+    var prod_config =  {
+        map: map,
+        packages: packages
+    };
 
-  System.config(config);
+  System.config(prod_config);
 
 })(this);
 

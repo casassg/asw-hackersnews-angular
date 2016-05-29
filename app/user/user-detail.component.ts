@@ -5,8 +5,8 @@ import { User }        from './user';
 import { UserService } from './user.service';
 @Component({
   selector: 'my-user-detail',
-  templateUrl: 'app/user/user-detail.component.html',
-  styleUrls: ['app/user/user-detail.component.css']
+  templateUrl: 'user/user-detail.component.html',
+  styleUrls: ['user/user-detail.component.css']
 })
 export class UserDetailComponent implements OnInit {
   @Input() user: User;
