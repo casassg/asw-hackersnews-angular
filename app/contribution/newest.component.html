@@ -1,15 +1,17 @@
-
+<h3>Asks</h3>
 <table class="grey">
     <tbody *ngFor="let contribution of contributions">
     <tr>
-        <td><span *ngIf="contribution.canVote==undefined"><a (click)="vote(contribution)">^</a></span></td>
-        <td colspan="2"><a [routerLink]="['ContributionDetail', {'id':contribution.id}]"> {{contribution.title}}</a></td>
+        <td colspan="3">
+            <span *ngIf="contribution.canVote==undefined"><a (click)="vote(contribution)">^</a></span>
+            <a [routerLink]="['ContributionDetail', {'id':contribution.id}]"> {{contribution.title}}</a>
+        </td>
     </tr>
     <tr>
         <td>{{contribution.upvote}} points</td>
-        <td> by {{contribution.user_id}}</td>
+        <td> by <a [routerLink]="['UserDetail', {'id':contribution.user_id}]">{{contribution.user_name}}</a></td>
         <td><a [routerLink]="['ContributionDetail', {'id':contribution.id}]">Comments</a></td>
     </tr>
-    <tr><td colspan="3"><hr></td></tr>
+    <tr><td><br><br></td></tr>
     </tbody>
 </table>

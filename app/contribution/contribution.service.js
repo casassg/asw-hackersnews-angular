@@ -102,7 +102,7 @@ var ContributionService = (function () {
         return this.http
             .post(this.commentUrl, JSON.stringify(parameters), { headers: headers })
             .toPromise()
-            .then(function (res) { return res.json().data; })
+            .then(function (res) { return res.json(); })
             .catch(this.handleError);
     };
     ContributionService.prototype.getReply = function (id) {

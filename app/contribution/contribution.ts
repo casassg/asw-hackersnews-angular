@@ -1,6 +1,7 @@
 import { User } from '../user/user';
 
 export class Contribution {
+  id: number;
   title: string;
   user: User;
   canVote: boolean;

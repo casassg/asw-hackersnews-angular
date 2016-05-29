@@ -23,15 +23,17 @@ var token_keeper_1 = require('./user/token.keeper');
 var reply_component_1 = require('./contribution/reply.component');
 var cookies_helper_1 = require('./user/cookies.helper');
 var AppComponent = (function () {
-    function AppComponent(router, keeper) {
+    function AppComponent(router, keeper, userServ) {
         this.router = router;
         this.keeper = keeper;
+        this.userServ = userServ;
         this.title = 'Hackers News';
         this.host = window.location.host;
         this.login_url = 'http://hackersnews.herokuapp.com/angular?redirect_url=http://' + this.host;
         this.loggedIn = false;
     }
     AppComponent.prototype.ngOnInit = function () {
+        var _this = this;
         var params = getQueryParams(document.location.search);
         if (params['token']) {
             cookies_helper_1.setCookie('token', params['token'], 100);
@@ -44,6 +46,11 @@ var AppComponent = (function () {
         }
         //this.router.navigate(['Dashboard']);
         this.loggedIn = this.keeper.isLoggedIn();
+        if (this.loggedIn) {
+            this.userServ.getMe().then(function (user) {
+                _this.keeper.registerUser(user);
+            });
+        }
     };
     AppComponent.prototype.logout = function () {
         this.keeper.setToken('');
@@ -69,15 +76,11 @@ var AppComponent = (function () {
             { path: '/user/:id', name: 'UserDetail', component: user_detail_component_1.UserDetailComponent },
             { path: '/me', name: 'MeDetail', component: me_component_1.MeDetailComponent },
             { path: '/contribution/:id', name: 'ContributionDetail', component: contribution_detail_component_1.ContributionDetailComponent },
-<<<<<<< HEAD
             { path: '/newest', name: 'Newest', component: newest_component_1.NewestComponent },
-            { path: '/asks', name: 'Asks', component: asks_component_1.AsksComponent }
-=======
             { path: '/asks', name: 'Asks', component: asks_component_1.AsksComponent },
-            { path: '/reply/:id', name: 'Reply', component: reply_component_1.ReplyComponent }
->>>>>>> dc16b38a599ff2e4e68f8f027a27ce8021b1e35b
+            { path: '/reply/:id', name: 'Reply', component: reply_component_1.ReplyComponent },
         ]), 
-        __metadata('design:paramtypes', [router_deprecated_1.Router, token_keeper_1.TokenKeeper])
+        __metadata('design:paramtypes', [router_deprecated_1.Router, token_keeper_1.TokenKeeper, user_service_1.UserService])
     ], AppComponent);
     return AppComponent;
 }());

@@ -36,20 +36,12 @@ var ContributionDetailComponent = (function () {
                 contribution.comments.sort(function (c1, c2) { return (new Date(c1.created_at)).getTime() - (new Date(c2.created_at)).getTime(); });
                 for (var _i = 0, _a = contribution.comments; _i < _a.length; _i++) {
                     var com = _a[_i];
-<<<<<<< HEAD
                     _this._userService.getUser(com.user_id).then(function (user) { return com.user_id = user.id; });
-=======
-                    _this._userService.getUser(com.user_id).then(function (user) { return com.user_name = user.name; });
->>>>>>> dc16b38a599ff2e4e68f8f027a27ce8021b1e35b
                     _this._contributionService.getComment(com.id).then(function (comment) {
-                        comment.user_name = com.user_name;
+                        comment.user_id = com.user_id;
                         for (var _i = 0, _a = comment.comments; _i < _a.length; _i++) {
                             var rep = _a[_i];
-<<<<<<< HEAD
                             _this._userService.getUser(rep.user_id).then(function (user) { return rep.user_id = user.id; });
-=======
-                            _this._userService.getUser(rep.user_id).then(function (user) { return rep.user_name = user.name; });
->>>>>>> dc16b38a599ff2e4e68f8f027a27ce8021b1e35b
                         }
                         _this.comments.push(comment);
                     });
@@ -62,7 +54,13 @@ var ContributionDetailComponent = (function () {
         }
     };
     ContributionDetailComponent.prototype.postComment = function (text, parent) {
-        this._contributionService.postComment(text, parent);
+        var _this = this;
+        console.log(text);
+        this._contributionService.postComment(text, parent).then(function (comment) {
+            console.log(comment);
+            _this.comments.push(comment);
+            _this.comment = new contribution_1.Contribution();
+        });
     };
     ContributionDetailComponent.prototype.loggedIn = function () {
         return this._contributionService.loggedIn();

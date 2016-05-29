@@ -2,10 +2,11 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 import { Contribution }        from './contribution';
 import { ContributionService } from './contribution.service';
+import { UserService } from '../user/user.service';
 @Component({
   selector: 'my-newest-detail',
-  templateUrl: 'app/newest.component.html',
-  styleUrls: ['app/newest.component.css'],
+  templateUrl: 'contribution/newest.component.html',
+  styleUrls: ['contribution/newest.component.css'],
   directives: [ROUTER_DIRECTIVES],
 })
 export class NewestComponent implements OnInit {

@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-{"version":3,"file":"contribution.js","sourceRoot":"","sources":["contribution.ts"],"names":[],"mappings":";AAAA;IAAA;IAaA,CAAC;IAAD,mBAAC;AAAD,CAAC,AAbD,IAaC;AAbY,oBAAY,eAaxB,CAAA"}
-=======
-{"version":3,"file":"contribution.js","sourceRoot":"","sources":["contribution.ts"],"names":[],"mappings":";AAEA;IAAA;IAcA,CAAC;IAAD,mBAAC;AAAD,CAAC,AAdD,IAcC;AAdY,oBAAY,eAcxB,CAAA"}
->>>>>>> dc16b38a599ff2e4e68f8f027a27ce8021b1e35b
+{"version":3,"file":"contribution.js","sourceRoot":"","sources":["contribution.ts"],"names":[],"mappings":";AAEA;IAAA;IAeA,CAAC;IAAD,mBAAC;AAAD,CAAC,AAfD,IAeC;AAfY,oBAAY,eAexB,CAAA"}
