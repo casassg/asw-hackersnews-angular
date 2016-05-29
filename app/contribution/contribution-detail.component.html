@@ -1,4 +1,5 @@
 <div *ngIf="contribution">
+	<br/>
 	<table>
 		<tr class="athing">
 			<td class="ind"></td>
@@ -7,16 +8,24 @@
 				<div style="margin-top:2px; margin-bottom: -10px;">
 					<span class="comhead">
 						<a href="#">{{contribution.title}}</a>
+						<a *ngIf="contribution.contr_subtype == 'url'" href="#">({{contribution.url}})</a>
 						<!-- Show url if not null-->
 					</span>
 				</div>
-				<p>{{contribution.votes.length}} points |
-				<!--<a href="#">{{getUser(contribution.user_id).name}}</a>-->
+				<p>{{contribution.upvote}} points by 
+				<a href="#">{{contribution.user_id}}</a> created at 
 				<a href="#">{{contribution.created_at}}</a> | 
-				<a href="#">{{contribution.comments.length}} comments</a></p>
-				<p>{{contribution.content}}</p>
+				<!--<a href="#">{{contribution.comments.length}} comments</a></p>-->
+				<p *ngIf="contribution.contr_subtype == 'text'">{{contribution.content}}</p>
 		</tr>
-		<tr style="height:10px"></tr>
+		<tr style="height:20px">
+			<td class="ind"></td>
+			<td></td>
+			<td>
+				<br/>
+				<textarea class="input_comment" ng-model="string"></textarea>
+			</td>
+		</tr>
 	</table>
 </div>
 
