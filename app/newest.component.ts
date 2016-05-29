@@ -1,8 +1,8 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { RouteParams } from '@angular/router-deprecated';
 
-import { Contribution }        from './contribution';
-import { ContributionService } from './contribution.service';
+import { Contribution }        from './contribution/contribution';
+import { ContributionService } from './contribution/contribution.service';
 @Component({
   selector: 'my-newest',
   templateUrl: 'app/newest.html',

@@ -3,7 +3,7 @@ import { Http, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Contribution } from './contribution';
+import { Contribution } from './contribution/contribution';
 
 @Injectable()
 export class ContributionService {
@@ -106,10 +106,9 @@ export class ContributionService {
 
 
 
-  ///////////////// VOTES
-
-
-
-
-  ///////////////////////
+  private handleError(error: any) {
+    console.error('An error occurred', error);
+    return Promise.reject(error.message || error);
+  }
+  
 }

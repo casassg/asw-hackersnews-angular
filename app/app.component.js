@@ -14,8 +14,8 @@ var dashboard_component_1 = require('./dashboard.component');
 var user_detail_component_1 = require('./user/user-detail.component');
 var me_component_1 = require('./user/me.component');
 var hero_service_1 = require('./hero.service');
-var contribution_service_1 = require('./contribution.service');
-var contribution_detail_component_1 = require('./contribution-detail.component');
+var contribution_service_1 = require('./contribution/contribution.service');
+var contribution_detail_component_1 = require('./contribution/contribution-detail.component');
 /*import { Newest } from './newest.component';*/
 var user_service_1 = require('./user/user.service');
 var token_keeper_1 = require('./user/token.keeper');

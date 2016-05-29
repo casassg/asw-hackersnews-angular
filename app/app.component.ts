@@ -7,8 +7,8 @@ import { HeroDetailComponent } from './hero-detail.component';
 import { UserDetailComponent } from './user/user-detail.component';
 import { MeDetailComponent } from './user/me.component';
 import { HeroService }         from './hero.service';
-import { ContributionService } from './contribution.service';
-import { ContributionDetailComponent } from './contribution-detail.component';
+import { ContributionService } from './contribution/contribution.service';
+import { ContributionDetailComponent } from './contribution/contribution-detail.component';
 /*import { Newest } from './newest.component';*/
 import { UserService }         from './user/user.service';
 import { TokenKeeper }         from './user/token.keeper';

@@ -1,0 +1,108 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var http_1 = require('@angular/http');
+require('rxjs/add/operator/toPromise');
+var ContributionService = (function () {
+    function ContributionService(http) {
+        this.http = http;
+        this.contributionsUrl = 'http://hackersnews.herokuapp.com/api/posts/'; // URL to web api
+        this.askUrl = 'http://hackersnews.herokuapp.com/api/posts/ask/';
+        this.urlUrl = 'http://hackersnews.herokuapp.com/api/posts/url/';
+        this.commentUrl = 'http://hackersnews.herokuapp.com/api/comments/';
+        this.replyUrl = 'http://hackersnews.herokuapp.com/api/replies/';
+    }
+    ContributionService.prototype.getAsks = function () {
+        return this.http.get(this.askUrl)
+            .toPromise()
+            .then(function (response) { return response.json().data; })
+            .catch(this.handleError);
+    };
+    ContributionService.prototype.getUrls = function () {
+        return this.http.get(this.urlUrl)
+            .toPromise()
+            .then(function (response) { return response.json().data; })
+            .catch(this.handleError);
+    };
+    ContributionService.prototype.getPost = function (id) {
+        console.log(this.contributionsUrl + id);
+        return this.http.get(this.contributionsUrl + id)
+            .toPromise()
+            .then(function (response) { return response.json().data; })
+            .catch(this.handleError);
+    };
+    ContributionService.prototype.postPost = function (contribution) {
+        var parameters = {};
+        parameters.title = contribution.title;
+        if (contribution.contr_subtype == 'url') {
+            parameters.url = contribution.url;
+        }
+        else {
+            parameters.content = contribution.content;
+        }
+        var headers = new http_1.Headers({
+            'Content-Type': 'application/json' });
+        return this.http
+            .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
+            .catch(this.handleError);
+    };
+    ContributionService.prototype.getComment = function (id) {
+        var url = this.commentUrl + "/" + id;
+        return this.http.get(url)
+            .toPromise()
+            .then(function (response) { return response.json().data; })
+            .catch(this.handleError);
+    };
+    ContributionService.prototype.postComment = function (contribution) {
+        var parameters = {};
+        parameters.comment = contribution.content;
+        parameters.parent_id = contribution.parent_id;
+        var headers = new http_1.Headers({
+            'Content-Type': 'application/json' });
+        return this.http
+            .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
+            .catch(this.handleError);
+    };
+    ContributionService.prototype.getReply = function (id) {
+        var url = this.replyUrl + "/" + id;
+        return this.http.get(url)
+            .toPromise()
+            .then(function (response) { return response.json().data; })
+            .catch(this.handleError);
+    };
+    ContributionService.prototype.postReply = function (contribution) {
+        var parameters = {};
+        parameters.reply = contribution.content;
+        parameters.parent_id = contribution.parent_id;
+        var headers = new http_1.Headers({
+            'Content-Type': 'application/json' });
+        return this.http
+            .post(this.replyUrl, JSON.stringify(parameters), { headers: headers })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
+            .catch(this.handleError);
+    };
+    ContributionService.prototype.handleError = function (error) {
+        console.error('An error occurred', error);
+        return Promise.reject(error.message || error);
+    };
+    ContributionService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [http_1.Http])
+    ], ContributionService);
+    return ContributionService;
+}());
+exports.ContributionService = ContributionService;
+//# sourceMappingURL=contribution.service.js.map
