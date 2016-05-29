@@ -12,11 +12,17 @@ export class ContributionDetailComponent implements OnInit {
   @Input() contribution: Contribution;
   @Output() close = new EventEmitter();
   error: any;
+  comment = new Contribution();
   navigated = false; // true if navigated here
 
   constructor(
     private _contributionService: ContributionService,
     private _routeParams: RouteParams) {
+    this.comment.content = "test";
+  }
+
+  test(comment:Contribution) {
+    console.log(comment.content);
   }
 
   ngOnInit() {

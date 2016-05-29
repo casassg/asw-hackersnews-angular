@@ -17,8 +17,13 @@ var ContributionDetailComponent = (function () {
         this._contributionService = _contributionService;
         this._routeParams = _routeParams;
         this.close = new core_1.EventEmitter();
+        this.comment = new contribution_1.Contribution();
         this.navigated = false; // true if navigated here
+        this.comment.content = "test";
     }
+    ContributionDetailComponent.prototype.test = function (comment) {
+        console.log(comment.content);
+    };
     ContributionDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
         if (this._routeParams.get('id') !== null) {

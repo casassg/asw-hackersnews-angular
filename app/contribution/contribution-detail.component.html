@@ -6,15 +6,16 @@
 			<td class="default">
 				<div style="margin-top:2px; margin-bottom: -10px;">
 					<span class="comhead">
-						<a href="#">{{contribution.title}}</a>
+						<a href="#">{{comment.title}}</a>
 						<!-- Show url if not null-->
 					</span>
 				</div>
-				<p>{{contribution.votes.length}} points |
-				<!--<a href="#">{{getUser(contribution.user_id).name}}</a>-->
-				<a href="#">{{contribution.created_at}}</a> | 
-				<a href="#">{{contribution.comments.length}} comments</a></p>
-				<p>{{contribution.content}}</p>
+				<!--<p>{{contribution.votes.length}} points |-->
+				<a href="#">{{comment.created_at}}</a> |
+				<!--<a href="#">{{contribution.comments.length}} comments</a></p>-->
+				<p>{{comment.content}}</p>
+				<input [(ngModel)]="comment.content" placeholder="comment" />
+			<button (click)="test(comment)">TEST</button>
 		</tr>
 		<tr style="height:10px"></tr>
 	</table>
