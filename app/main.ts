@@ -9,8 +9,7 @@ import { HTTP_PROVIDERS } from '@angular/http';
 import { ROUTER_PROVIDERS }     from '@angular/router'
 
 import { AppComponent }   from './app.component';
-import { LocationStrategy,
-         HashLocationStrategy } from '@angular/common';
+import { LocationStrategy} from '@angular/common';
 
 /*
 bootstrap(AppComponent, [ HTTP_PROVIDERS ]);

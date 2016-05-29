@@ -9,8 +9,8 @@ import { TokenKeeper } from './token.keeper';
 @Injectable()
 export class UserService {
 
-  private userUrl = 'http://hackersnews.herokuapp.com/api/users/';  // URL to web api
-  private meUrl = 'http://hackersnews.herokuapp.com/api/me/';  // URL to web api
+  private userUrl = 'https://hackersnews.herokuapp.com/api/users/';  // URL to web api
+  private meUrl = 'https://hackersnews.herokuapp.com/api/me/';  // URL to web api
 
   constructor(private http: Http, private keeper: TokenKeeper) { }
 
