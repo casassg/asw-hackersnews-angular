@@ -14,11 +14,11 @@ require('rxjs/add/operator/toPromise');
 var ContributionService = (function () {
     function ContributionService(http) {
         this.http = http;
-        this.contributionsUrl = 'http://hackersnews.herokuapp.com/api/posts/'; // URL to web api
-        this.askUrl = 'http://hackersnews.herokuapp.com/api/posts/ask/';
-        this.urlUrl = 'http://hackersnews.herokuapp.com/api/posts/url/';
-        this.commentUrl = 'http://hackersnews.herokuapp.com/api/comments/';
-        this.replyUrl = 'http://hackersnews.herokuapp.com/api/replies/';
+        this.contributionsUrl = 'https://hackersnews.herokuapp.com/api/posts/'; // URL to web api
+        this.askUrl = 'https://hackersnews.herokuapp.com/api/posts/ask/';
+        this.urlUrl = 'https://hackersnews.herokuapp.com/api/posts/url/';
+        this.commentUrl = 'https://hackersnews.herokuapp.com/api/comments/';
+        this.replyUrl = 'https://hackersnews.herokuapp.com/api/replies/';
     }
     ContributionService.prototype.toContribution = function (json) {
         var contribution = json.contribution;
