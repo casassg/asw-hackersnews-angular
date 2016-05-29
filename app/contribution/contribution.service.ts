@@ -14,6 +14,8 @@ export class ContributionService {
     private urlUrl = 'https://hackersnews.herokuapp.com/api/posts/url/';
     private commentUrl = 'https://hackersnews.herokuapp.com/api/comments/';
     private replyUrl = 'https://hackersnews.herokuapp.com/api/replies/';
+    private newVote = 'https://hackersnews.herokuapp.com/api/votes/';
+
 
     constructor(private http:Http, private keeper:TokenKeeper) {
     }
@@ -123,6 +125,16 @@ export class ContributionService {
             .catch(this.handleError);
     }
 
+    postVote(id:number){
+      let headers = new Headers({
+          'Content-Type': 'application/json'});
+
+      return this.http
+                   .post(this.newVote, JSON.stringify(id), {headers: headers})
+                   .toPromise()
+                   .then(res => res.json().data)
+                   .catch(this.handleError);
+    }
 
     private handleError(error:any) {
         console.error('An error occurred', error);

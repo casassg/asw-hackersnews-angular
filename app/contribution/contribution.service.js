@@ -21,6 +21,7 @@ var ContributionService = (function () {
         this.urlUrl = 'https://hackersnews.herokuapp.com/api/posts/url/';
         this.commentUrl = 'https://hackersnews.herokuapp.com/api/comments/';
         this.replyUrl = 'https://hackersnews.herokuapp.com/api/replies/';
+        this.newVote = 'https://hackersnews.herokuapp.com/api/votes/';
     }
     ContributionService.prototype.toContribution = function (json) {
         var contribution = json.contribution;
@@ -109,6 +110,15 @@ var ContributionService = (function () {
         });
         return this.http
             .post(this.replyUrl, JSON.stringify(parameters), { headers: headers })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
+            .catch(this.handleError);
+    };
+    ContributionService.prototype.postVote = function (id) {
+        var headers = new http_1.Headers({
+            'Content-Type': 'application/json' });
+        return this.http
+            .post(this.newVote, JSON.stringify(id), { headers: headers })
             .toPromise()
             .then(function (res) { return res.json().data; })
             .catch(this.handleError);
