@@ -1,0 +1,39 @@
+<div>
+	<br/>
+	<table>
+		<tr class="athing">
+			<td class="ind"></td>
+			<td valign="top"><!-- Show votes if logged in and not voted--></td>
+			<td class="default">
+				<div style="margin-top:2px; margin-bottom: -10px;">
+					<span class="comhead">
+						<a href="#">{{contribution.title}}</a>
+						<a *ngIf="contribution.contr_subtype == 'url'" href="#">({{contribution.url}})</a>
+						<!-- Show url if not null-->
+					</span>
+				</div>
+				<p>{{contribution.upvote}} points by 
+				<a href="#">{{name}}</a> created at 
+				<a href="#">{{contribution.created_at}}</a> | 
+				<a href="#">{{contribution.comments.length}} comments</a></p>
+				<p *ngIf="contribution.contr_subtype == 'text'">{{contribution.content}}</p>
+		</tr>
+		<tr style="height:20px">
+			<td class="ind"></td>
+			<td></td>
+			<td>
+				<br/>
+				<span *ngIf="loggedIn()">
+					<textarea class="input_comment" [(ngModel)]="comment.content"></textarea>
+					<button (click)="postReply(comment.content, contribution.id)">Reply</button>
+				</span>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->
