@@ -15,29 +15,6 @@ export class ContributionService {
     private replyUrl = 'https://hackersnews.herokuapp.com/api/replies/';
     private newVote = 'https://hackersnews.herokuapp.com/api/votes/';
 
-    constructor(private http: Http) { }
-
-    getAsks(): Promise<Contribution[]> {
-      return this.http.get(this.askUrl)
-                 .toPromise()
-                 .then(response => response.json().data)
-                 .catch(this.handleError);
-    }
-
-    getUrls(): Promise<Contribution[]> {
-      return this.http.get(this.urlUrl)
-                 .toPromise()
-                 .then(response => response.json().data)
-                 .catch(this.handleError);
-    }
-
-    getPost(id: number): Promise<Contribution> {
-      return this.http.get(this.contributionsUrl+id)
-                  .toPromise()
-                  .then(response => response.json().data)
-                  .catch(this.handleError);
-    }
-
 
     constructor(private http:Http) {
     }

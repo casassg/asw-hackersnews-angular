@@ -19,7 +19,26 @@ var ContributionService = (function () {
         this.urlUrl = 'https://hackersnews.herokuapp.com/api/posts/url/';
         this.commentUrl = 'https://hackersnews.herokuapp.com/api/comments/';
         this.replyUrl = 'https://hackersnews.herokuapp.com/api/replies/';
+        this.newVote = 'https://hackersnews.herokuapp.com/api/votes/';
     }
+    ContributionService.prototype.getAsks = function () {
+        return this.http.get(this.askUrl)
+            .toPromise()
+            .then(function (response) { return response.json().data; })
+            .catch(this.handleError);
+    };
+    ContributionService.prototype.getUrls = function () {
+        return this.http.get(this.urlUrl)
+            .toPromise()
+            .then(function (response) { return response.json().data; })
+            .catch(this.handleError);
+    };
+    ContributionService.prototype.getPost = function (id) {
+        return this.http.get(this.contributionsUrl + id)
+            .toPromise()
+            .then(function (response) { return response.json().data; })
+            .catch(this.handleError);
+    };
     ContributionService.prototype.toContribution = function (json) {
         var contribution = json.contribution;
         console.log(contribution);
@@ -40,10 +59,7 @@ var ContributionService = (function () {
             .catch(this.handleError);
     };
     ContributionService.prototype.getPost = function (id) {
-<<<<<<< HEAD
-=======
         var _this = this;
->>>>>>> 9740b828ae3e64707b2da0ce262ed1dfd9485171
         return this.http.get(this.contributionsUrl + id)
             .toPromise()
             .then(function (response) { return _this.toContribution(response.json()); })
@@ -109,6 +125,15 @@ var ContributionService = (function () {
         });
         return this.http
             .post(this.replyUrl, JSON.stringify(parameters), { headers: headers })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
+            .catch(this.handleError);
+    };
+    ContributionService.prototype.postVote = function (id) {
+        var headers = new http_1.Headers({
+            'Content-Type': 'application/json' });
+        return this.http
+            .post(this.newVote, JSON.stringify(id), { headers: headers })
             .toPromise()
             .then(function (res) { return res.json().data; })
             .catch(this.handleError);
