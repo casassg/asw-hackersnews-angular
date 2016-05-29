@@ -22,9 +22,8 @@ export class ContributionService {
 
     private toContribution(json:any):Contribution{
         let contribution = json.contribution;
-        console.log(contribution);
+        contribution.comments= json.comments;
         return contribution;
-
     }
 
     getAsks():Promise<Contribution[]> {
