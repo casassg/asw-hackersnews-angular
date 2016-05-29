@@ -18,13 +18,12 @@ var DashboardComponent = (function () {
         this.heroes = [];
     }
     DashboardComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this._heroService.getHeroes()
-            .then(function (heroes) { return _this.heroes = heroes.slice(1, 5); });
+        //this._heroService.getHeroes()
+        //.then(heroes => this.heroes = heroes.slice(1,5));
     };
     DashboardComponent.prototype.gotoDetail = function (hero) {
-        var link = ['HeroDetail', { id: hero.id }];
-        this._router.navigate(link);
+        //let link = ['HeroDetail', { id: hero.id }];
+        //this._router.navigate(link);
     };
     DashboardComponent = __decorate([
         core_1.Component({

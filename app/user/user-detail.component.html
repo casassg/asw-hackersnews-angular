@@ -1,0 +1,16 @@
+<div *ngIf="user">
+  <h2>{{user.name}} details!</h2>
+  <div>
+    <label>id: </label>{{user.id}}<br>
+    <label>email: </label>{{user.email}}</div>
+  <div>
+    <label>name: </label>
+    <input [(ngModel)]="user.name" placeholder="user" />
+  </div>
+</div>
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->
