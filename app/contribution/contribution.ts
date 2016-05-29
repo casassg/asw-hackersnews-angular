@@ -7,7 +7,7 @@ export class Contribution {
   canVote: boolean;
   contr_subtype: string;
   content: string;
-  user_id: number;
+  user_id: any;
   url: string;
   parent_id: number;
   upvote: number;

@@ -53,7 +53,12 @@ export class ContributionDetailComponent implements OnInit {
   }
 
   postComment(text:string, parent:number) {
-    this._contributionService.postComment(text, parent);
+      console.log(text);
+    this._contributionService.postComment(text, parent).then(comment=>{
+        console.log(comment);
+        this.comments.push(comment);
+        this.comment = new Contribution();
+    })
 
   }
 

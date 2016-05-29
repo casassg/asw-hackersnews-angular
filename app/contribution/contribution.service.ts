@@ -109,7 +109,7 @@ export class ContributionService {
         return this.http
             .post(this.commentUrl, JSON.stringify(parameters), {headers: headers})
             .toPromise()
-            .then(res => res.json().data)
+            .then(res => res.json())
             .catch(this.handleError);
     }
 
