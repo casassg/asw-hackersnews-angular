@@ -14,7 +14,7 @@
 				<a href="#">{{comment.created_at}}</a> |
 				<!--<a href="#">{{contribution.comments.length}} comments</a></p>-->
 				<p>{{comment.content}}</p>
-				<input [(ngModel)]="comment.content" placeholder="comment" />
+				<textarea [(ngModel)]="comment.content" placeholder="comment" ></textarea>
 			<button (click)="test(comment)">TEST</button>
 		</tr>
 		<tr style="height:10px"></tr>
