@@ -1,14 +1,18 @@
 {
-  "name": "angular2-express-slim",
-  "version": "0.0.0",
+  "name": "hackers_news",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "concurrently \"tsc -w\" \"node ./bin/www\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "typings": "typings install",
+    "postinstall": "typings install",
     "bundle": "node bin/bundler.js",
     "bundle:prod": "node bin/bundler.js --prod"
+  },
+  "engines": {
+    "node": "0.12.12"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
