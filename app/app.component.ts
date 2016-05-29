@@ -23,6 +23,7 @@ import { setCookie, getCookie }         from './user/cookies.helper';
       <a [routerLink]="['Dashboard']">Dashboard</a>
       <!--<a [routerLink]="['Newest']">Newest</a>-->
       <a [routerLink]="['ContributionDetail', {'id':'5'}]">Contribution 5 (test)</a>
+      <a [routerLink]="['ContributionDetail', {'id':'1'}]">Contribution 1 (test)</a>
       <a [routerLink]="['UserDetail',{id:1}]">Usuari 1 (test)</a>
       <a *ngIf="loggedIn" [routerLink]="['MeDetail']">Me</a>
       <a *ngIf="!loggedIn" [href]='login_url'>Login</a>
