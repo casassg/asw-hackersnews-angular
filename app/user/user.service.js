@@ -44,6 +44,8 @@ var UserService = (function () {
     UserService.prototype.update = function (user) {
         var headers = new http_1.Headers();
         headers.append('Content-Type', 'application/json');
+        var token = this.keeper.getToken();
+        headers.append('Authorization', token);
         var url = this.userUrl + user.id;
         return this.http
             .put(url, JSON.stringify({ 'name': user.name }), { headers: headers })
