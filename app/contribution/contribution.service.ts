@@ -31,7 +31,6 @@ export class ContributionService {
   }
 
   getPost(id: number): Promise<Contribution> {
-    console.log(this.contributionsUrl+id);
     return this.http.get(this.contributionsUrl+id)
                 .toPromise()
                 .then(response => response.json().data)
