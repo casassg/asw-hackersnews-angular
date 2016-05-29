@@ -8,11 +8,11 @@ import { Contribution } from './contribution';
 @Injectable()
 export class ContributionService {
 
-    private contributionsUrl = 'http://hackersnews.herokuapp.com/api/posts/';  // URL to web api
-    private askUrl = 'http://hackersnews.herokuapp.com/api/posts/ask/';
-    private urlUrl = 'http://hackersnews.herokuapp.com/api/posts/url/';
-    private commentUrl = 'http://hackersnews.herokuapp.com/api/comments/';
-    private replyUrl = 'http://hackersnews.herokuapp.com/api/replies/';
+    private contributionsUrl = 'https://hackersnews.herokuapp.com/api/posts/';  // URL to web api
+    private askUrl = 'https://hackersnews.herokuapp.com/api/posts/ask/';
+    private urlUrl = 'https://hackersnews.herokuapp.com/api/posts/url/';
+    private commentUrl = 'https://hackersnews.herokuapp.com/api/comments/';
+    private replyUrl = 'https://hackersnews.herokuapp.com/api/replies/';
 
     constructor(private http:Http) {
     }
