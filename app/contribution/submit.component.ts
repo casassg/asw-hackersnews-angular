@@ -33,9 +33,22 @@ export class SubmitComponent implements OnInit {
   }
 
   post() {
+    if (this.contribution.title == undefined){
+      alert("Necessites un titol per crear un post nou");
+      return;
+    }
+    if (this.contribution.url == undefined && this.contribution.content == undefined){
+      alert("Necessites un text o una url per crear un post nou");
+      return;
+    }
     this._contributionService.postPost(this.contribution).then(
-      contribution => this._router.navigate(['/contribution/:id', contribution.id])
-    );
+      contribution => this._router.navigate(['ContributionDetail', {'id':contribution.id}])
+    ).catch(error => {
+          console.log(error);
+          if (error.status == 400){
+            alert("No es pot crear un post amb url i text a la vegada");
+          }
+        })
   }
 
 }
