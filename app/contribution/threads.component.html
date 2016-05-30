@@ -3,7 +3,8 @@
     <tbody *ngFor="let contribution of threads">
     <tr>
         <td colspan="3">
-            {{contribution.content}}
+            {{contribution.content}} | de <a [routerLink]="['ContributionDetail', {'id':contribution.parent_id}]">{{contribution.parent_id}}</a>
+            
         </td>
     </tr>
     <tr>

@@ -25,9 +25,22 @@ export class ThreadsComponent implements OnInit {
                 this._userService.getUser(thread.user_id).then(user => {
                     thread.user = user;
                     ret.push(thread);
-                    this.threads = ret.sort((c1, c2) => (new Date(c2.created_at)).getTime() - (new Date(c1.created_at)).getTime());
+                    //this.threads = ret.sort((c1, c2) => (new Date(c2.created_at)).getTime() - (new Date(c1.created_at)).getTime());
+                    
+                    this._contributionService.getPost(thread.parent_id).then(contribution => {
+			    if(thread.contr_subtype == 'reply'){
+			      this._contributionService.getPost(contribution.parent_id).then(contribution2 => {
+				  this.threads.push(contribution2);
+			      });
+			    }
+			    else {
+				  this.threads.push(contribution);
+			    }
+			    this.threads = ret.sort((c1, c2) => (new Date(c2.created_at)).getTime() - (new Date(c1.created_at)).getTime());
+                    });
 
-                })
+                });
+                
             }
         });
     });
