@@ -22,6 +22,7 @@ var ContributionService = (function () {
         this.commentUrl = 'https://hackersnews.herokuapp.com/api/comments/';
         this.replyUrl = 'https://hackersnews.herokuapp.com/api/replies/';
         this.newVote = 'https://hackersnews.herokuapp.com/api/votes/';
+        this.threadsUrl = 'https://hackersnews.herokuapp.com/api/users/';
     }
     ContributionService.prototype.toPost = function (json) {
         var contribution = json.contribution;
@@ -32,6 +33,16 @@ var ContributionService = (function () {
         var contribution = json.contribution;
         contribution.comments = json.replies;
         return contribution;
+    };
+    ContributionService.prototype.getThreads = function (me) {
+        console.log(me);
+        var id = me.id;
+        return this.http.get(this.threadsUrl + id + '/threads')
+            .toPromise()
+            .then(function (response) {
+            return response.json();
+        })
+            .catch(this.handleError);
     };
     ContributionService.prototype.getAsks = function () {
         return this.http.get(this.askUrl)
@@ -64,23 +75,12 @@ var ContributionService = (function () {
             this.handleError("NOT LOGGED IN! YOU NEED TO LOGIN BEFORE THIS!");
         }
         headers.append('Authorization', token);
-        if (contribution.contr_subtype == 'url') {
-            var parameters = { 'title': contribution.title, 'url': contribution.url };
-            return this.http
-                .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
-                .toPromise()
-                .then(function (res) { return res.json(); })
-                .catch(this.handleError);
-        }
-        else {
-            var content = contribution.content;
-            var parameters = { 'title': contribution.title, 'content': contribution.content };
-            return this.http
-                .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
-                .toPromise()
-                .then(function (res) { return res.json(); })
-                .catch(this.handleError);
-        }
+        var parameters = { 'title': contribution.title, 'url': contribution.url, 'text': contribution.content };
+        return this.http
+            .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
+            .toPromise()
+            .then(function (res) { return res.json(); })
+            .catch(this.handleError);
     };
     ContributionService.prototype.getComment = function (id) {
         var _this = this;
