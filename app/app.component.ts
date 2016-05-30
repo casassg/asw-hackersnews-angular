@@ -15,6 +15,7 @@ import { UserService }         from './user/user.service';
 import { TokenKeeper }         from './user/token.keeper';
 import { ReplyComponent } from './contribution/reply.component';
 import { setCookie, getCookie }         from './user/cookies.helper';
+import { SubmitComponent } from './contribution/submit.component';
 
 @Component({
   selector: 'my-app',
@@ -24,6 +25,7 @@ import { setCookie, getCookie }         from './user/cookies.helper';
     <nav>
       <a [routerLink]="['Newest']">Newest</a>
       <a [routerLink]="['Asks']">Asks</a>
+      <a [routerLink]="['Submit']">Submit</a>
       <a *ngIf="loggedIn" [routerLink]="['MeDetail']">Me</a>
       <a *ngIf="!loggedIn" [href]='login_url'>Login</a>
       <a *ngIf="loggedIn" (click)='logout()'>Logout</a>
@@ -47,6 +49,7 @@ import { setCookie, getCookie }         from './user/cookies.helper';
   { path: '/newest', name: 'Newest', component: NewestComponent,  useAsDefault: true },
   { path: '/asks', name: 'Asks', component: AsksComponent },
   { path: '/reply/:id', name: 'Reply', component: ReplyComponent },
+  { path: '/submit', name: 'Submit', component: SubmitComponent },
 ])
 
 export class AppComponent  implements OnInit {

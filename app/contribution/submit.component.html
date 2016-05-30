@@ -1,0 +1,31 @@
+<div>
+	<br/>
+	<table>
+		<tr>
+			<td>Title</td>
+			<td><input [(ngModel)]="contribution.title"/></td>
+		</tr>
+		<tr>
+			<td>Url</td>
+			<td><input [(ngModel)]="contribution.url"/></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>or</td>
+		</tr>
+		<tr>
+			<td>Text</td>
+			<td><textarea class="input_comment" [(ngModel)]="contribution.content"></textarea></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><button (click)="post()">Submit</button></td>
+		</tr>
+	</table>
+</div>
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->

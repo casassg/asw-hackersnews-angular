@@ -67,23 +67,12 @@ export class ContributionService {
         }
         headers.append('Authorization', token);
 
-        if (contribution.contr_subtype == 'url') {
-            let parameters = {'title':contribution.title, 'url': contribution.url};
+        let parameters = {'title':contribution.title, 'url': contribution.url, 'text': contribution.content};
             return this.http
                 .post(this.contributionsUrl, JSON.stringify(parameters), {headers: headers})
                 .toPromise()
                 .then(res => res.json())
                 .catch(this.handleError);
-        }
-        else {
-            const content = contribution.content;
-            let parameters = {'title':contribution.title, 'content':contribution.content};
-            return this.http
-                .post(this.contributionsUrl, JSON.stringify(parameters), {headers: headers})
-                .toPromise()
-                .then(res => res.json())
-                .catch(this.handleError);
-        }
 
     }
 
@@ -162,7 +151,7 @@ export class ContributionService {
       return this.keeper.isLoggedIn();
     }
 
-    private handleError(error:any) {
+    private handleError(error:any)  {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     }
