@@ -28,6 +28,10 @@ button:disabled {
   cursor: auto;
 }
 
+a {
+  color: black;
+}
+
 .input_comment {
   width:100%;
   height:90px;

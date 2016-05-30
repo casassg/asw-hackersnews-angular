@@ -27,6 +27,12 @@ button:disabled {
     color: #ccc;
     cursor: auto;
 }
+a {
+    color: black;
+} 
+.vote {
+    font-weight: bold;
+}
 
 
 /*
