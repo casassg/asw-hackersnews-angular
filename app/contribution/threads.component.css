@@ -27,4 +27,7 @@ button:disabled {
     color: #ccc;
     cursor: auto;
 }
+a {
+    color: black;
+}
  
