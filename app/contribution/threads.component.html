@@ -9,7 +9,7 @@
     <tr>
         <td>{{contribution.upvote}} points</td>
         <td> by <a [routerLink]="['UserDetail', {'id':contribution.user_id}]">{{contribution.user.name}}</a></td>
-        <td>></td>
+        <td> on <a [routerLink]="['ContributionDetail', {'id':par_id}]">{{contribution.parent_name}}</a></td>
     </tr>
     <tr><td><br><br></td></tr>
     </tbody>

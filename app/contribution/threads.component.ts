@@ -12,6 +12,7 @@ import { UserService } from '../user/user.service';
 export class ThreadsComponent implements OnInit {
     threads:  Contribution[];
     error: any;
+    par_id: number;
 
     constructor(private router: Router,
         private _contributionService: ContributionService, private _userService: UserService) {
@@ -26,7 +27,13 @@ export class ThreadsComponent implements OnInit {
                     thread.user = user;
                     ret.push(thread);
                     this.threads = ret.sort((c1, c2) => (new Date(c2.created_at)).getTime() - (new Date(c1.created_at)).getTime());
-
+		    if (thread.contr_type == "comment") this._contributionService.getPost(thread.parent_id).then(contribution => {
+												thread.parent_name = contribution.title;
+												this.par_id = contribution.id;});
+		    else this._contributionService.getComment(thread.parent_id).then(contribution =>
+								this._contributionService.getPost(contribution.parent_id).then(contribution =>{
+												thread.parent_name = contribution.title;
+												this.par_id = contribution.id;}));
                 })
             }
         });
