@@ -24,7 +24,8 @@ export class AsksComponent implements OnInit {
                 this._userService.getUser(ask.user_id).then(user => {
                     ask.user = user;
                     ret.push(ask);
-                    this.asks = ret;
+                    this.asks = ret.sort((c1, c2) => (new Date(c2.created_at)).getTime() - (new Date(c1.created_at)).getTime());
+
                 })
             }
         });
