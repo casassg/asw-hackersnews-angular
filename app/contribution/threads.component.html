@@ -1,0 +1,17 @@
+<h3>Threads</h3>
+<table class="grey">
+    <tbody *ngFor="let contribution of asks">
+    <tr>
+        <td colspan="3">
+            <span *ngIf="contribution.canVote==undefined"><a (click)="vote(contribution)">^</a></span>
+            <a [routerLink]="['ContributionDetail', {'id':contribution.id}]"> {{contribution.title}}</a>
+        </td>
+    </tr>
+    <tr>
+        <td>{{contribution.upvote}} points</td>
+        <td> by <a [routerLink]="['UserDetail', {'id':contribution.user_id}]">{{contribution.user.name}}</a></td>
+        <td><a [routerLink]="['ContributionDetail', {'id':contribution.id}]">Comments</a></td>
+    </tr>
+    <tr><td><br><br></td></tr>
+    </tbody>
+</table>

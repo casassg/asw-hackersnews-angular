@@ -16,6 +16,7 @@ import { TokenKeeper }         from './user/token.keeper';
 import { ReplyComponent } from './contribution/reply.component';
 import { setCookie, getCookie }         from './user/cookies.helper';
 import { SubmitComponent } from './contribution/submit.component';
+import { ThreadsComponent } from './contribution/threads.component';
 
 @Component({
   selector: 'my-app',
@@ -25,6 +26,7 @@ import { SubmitComponent } from './contribution/submit.component';
     <nav>
       <a [routerLink]="['Newest']">Newest</a>
       <a [routerLink]="['Asks']">Asks</a>
+      <a *ngIf="loggedIn" [routerLink]="['Threads']">Threads</a>
       <a [routerLink]="['Submit']">Submit</a>
       <a *ngIf="loggedIn" [routerLink]="['MeDetail']">Me</a>
       <a *ngIf="!loggedIn" [href]='login_url'>Login</a>
@@ -50,6 +52,7 @@ import { SubmitComponent } from './contribution/submit.component';
   { path: '/asks', name: 'Asks', component: AsksComponent },
   { path: '/reply/:id', name: 'Reply', component: ReplyComponent },
   { path: '/submit', name: 'Submit', component: SubmitComponent },
+  { path: '/threads', name: 'Threads', component: ThreadsComponent },
 ])
 
 export class AppComponent  implements OnInit {

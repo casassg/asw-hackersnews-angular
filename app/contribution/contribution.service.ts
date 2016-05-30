@@ -31,7 +31,16 @@ export class ContributionService {
         return contribution;
     }
 
-
+    getThreads():Promise<Contribution[]>{
+      var user = this.keeper.getCurrentUser();
+      var id = user.id;
+      return this.http.get('https://hackersnews.herokuapp.com/api/users/{id}/threads')
+	  .toPromise()
+	  .then(response => {
+	    return response.json() 
+	  })
+	  . catch(this.handleError);
+    }
 
     getAsks():Promise<Contribution[]> {
         return this.http.get(this.askUrl)

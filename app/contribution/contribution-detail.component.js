@@ -28,24 +28,40 @@ var ContributionDetailComponent = (function () {
         var _this = this;
         if (this._routeParams.get('id') !== null) {
             this.comments = [];
-            var id_1 = +this._routeParams.get('id');
+            var id = +this._routeParams.get('id');
             this.navigated = true;
-            this._contributionService.getPost(id_1)
+            this._contributionService.getPost(id)
                 .then(function (contribution) {
-                _this._userService.getUser(id_1).then(function (user) { return _this.name = user.name; });
-                contribution.comments.sort(function (c1, c2) { return (new Date(c1.created_at)).getTime() - (new Date(c2.created_at)).getTime(); });
-                for (var _i = 0, _a = contribution.comments; _i < _a.length; _i++) {
-                    var com = _a[_i];
-                    _this._userService.getUser(com.user_id).then(function (user) { return com.user_name = user.name; });
-                    _this._contributionService.getComment(com.id).then(function (comment) {
-                        comment.user_name = com.user_name;
-                        for (var _i = 0, _a = comment.comments; _i < _a.length; _i++) {
-                            var rep = _a[_i];
-                            _this._userService.getUser(rep.user_id).then(function (user) { return rep.user_name = user.name; });
-                        }
-                        _this.comments.push(comment);
-                    });
-                }
+                _this._userService.getUser(contribution.user_id).then(function (user1) {
+                    contribution.user = user1;
+                    contribution.user_name = user1.name;
+                    contribution.user_id = user1.id;
+                    //contribution.comments.sort((c1, c2) => (new Date(c1.created_at)).getTime() - (new Date(c2.created_at)).getTime());
+                    var _loop_1 = function(com) {
+                        _this._userService.getUser(com.user_id).then(function (user2) {
+                            com.user = user2;
+                            com.user_name = user2.name;
+                            _this._contributionService.getComment(com.id).then(function (comment) {
+                                comment.user_name = user2.name;
+                                var _loop_2 = function(rep) {
+                                    _this._userService.getUser(rep.user_id).then(function (user) {
+                                        rep.user_name = user.name;
+                                    });
+                                };
+                                for (var _i = 0, _a = comment.comments; _i < _a.length; _i++) {
+                                    var rep = _a[_i];
+                                    _loop_2(rep);
+                                }
+                                _this.comments.push(comment);
+                                _this.comments = _this.comments.sort(function (c1, c2) { return (new Date(c1.created_at)).getTime() - (new Date(c2.created_at)).getTime(); });
+                            });
+                        });
+                    };
+                    for (var _i = 0, _a = contribution.comments; _i < _a.length; _i++) {
+                        var com = _a[_i];
+                        _loop_1(com);
+                    }
+                });
                 _this.contribution = contribution;
             });
         }
@@ -55,11 +71,14 @@ var ContributionDetailComponent = (function () {
     };
     ContributionDetailComponent.prototype.postComment = function (text, parent) {
         var _this = this;
-        console.log(text);
         this._contributionService.postComment(text, parent).then(function (comment) {
-            console.log(comment);
-            _this.comments.push(comment);
-            _this.comment = new contribution_1.Contribution();
+            _this._userService.getMe().then(function (me) {
+                comment.user = me;
+                comment.user_name = me.name;
+                comment.user_id = me.id;
+                _this.comments.push(comment);
+                _this.comment = new contribution_1.Contribution();
+            });
         });
     };
     ContributionDetailComponent.prototype.loggedIn = function () {

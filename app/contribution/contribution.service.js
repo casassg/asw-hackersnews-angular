@@ -33,6 +33,16 @@ var ContributionService = (function () {
         contribution.comments = json.replies;
         return contribution;
     };
+    ContributionService.prototype.getThreads = function () {
+        var user = this.keeper.getCurrentUser();
+        var id = user.id;
+        return this.http.get('https://hackersnews.herokuapp.com/api/users/{id}/threads')
+            .toPromise()
+            .then(function (response) {
+            return response.json();
+        })
+            .catch(this.handleError);
+    };
     ContributionService.prototype.getAsks = function () {
         return this.http.get(this.askUrl)
             .toPromise()
@@ -64,23 +74,12 @@ var ContributionService = (function () {
             this.handleError("NOT LOGGED IN! YOU NEED TO LOGIN BEFORE THIS!");
         }
         headers.append('Authorization', token);
-        if (contribution.contr_subtype == 'url') {
-            var parameters = { 'title': contribution.title, 'url': contribution.url };
-            return this.http
-                .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
-                .toPromise()
-                .then(function (res) { return res.json(); })
-                .catch(this.handleError);
-        }
-        else {
-            var content = contribution.content;
-            var parameters = { 'title': contribution.title, 'content': contribution.content };
-            return this.http
-                .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
-                .toPromise()
-                .then(function (res) { return res.json(); })
-                .catch(this.handleError);
-        }
+        var parameters = { 'title': contribution.title, 'url': contribution.url, 'text': contribution.content };
+        return this.http
+            .post(this.contributionsUrl, JSON.stringify(parameters), { headers: headers })
+            .toPromise()
+            .then(function (res) { return res.json(); })
+            .catch(this.handleError);
     };
     ContributionService.prototype.getComment = function (id) {
         var _this = this;
