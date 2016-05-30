@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { Contribution } from './contribution';
 import { TokenKeeper } from '../user/token.keeper';
-
+import { User } from '../user/user';
 @Injectable()
 export class ContributionService {
 
@@ -15,6 +15,7 @@ export class ContributionService {
     private commentUrl = 'https://hackersnews.herokuapp.com/api/comments/';
     private replyUrl = 'https://hackersnews.herokuapp.com/api/replies/';
     private newVote = 'https://hackersnews.herokuapp.com/api/votes/';
+    private threadsUrl = 'https://hackersnews.herokuapp.com/api/users/';
 
 
     constructor(private http:Http, private keeper:TokenKeeper) {
@@ -31,10 +32,10 @@ export class ContributionService {
         return contribution;
     }
 
-    getThreads():Promise<Contribution[]>{
-      var user = this.keeper.getCurrentUser();
-      var id = user.id;
-      return this.http.get('https://hackersnews.herokuapp.com/api/users/{id}/threads')
+    getThreads(me:User):Promise<Contribution[]>{
+      console.log(me);
+      let id = me.id;
+      return this.http.get(this.threadsUrl + id + '/threads')
 	  .toPromise()
 	  .then(response => {
 	    return response.json() 

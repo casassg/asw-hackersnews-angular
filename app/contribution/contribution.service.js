@@ -22,6 +22,7 @@ var ContributionService = (function () {
         this.commentUrl = 'https://hackersnews.herokuapp.com/api/comments/';
         this.replyUrl = 'https://hackersnews.herokuapp.com/api/replies/';
         this.newVote = 'https://hackersnews.herokuapp.com/api/votes/';
+        this.threadsUrl = 'https://hackersnews.herokuapp.com/api/users/';
     }
     ContributionService.prototype.toPost = function (json) {
         var contribution = json.contribution;
@@ -33,10 +34,10 @@ var ContributionService = (function () {
         contribution.comments = json.replies;
         return contribution;
     };
-    ContributionService.prototype.getThreads = function () {
-        var user = this.keeper.getCurrentUser();
-        var id = user.id;
-        return this.http.get('https://hackersnews.herokuapp.com/api/users/{id}/threads')
+    ContributionService.prototype.getThreads = function (me) {
+        console.log(me);
+        var id = me.id;
+        return this.http.get(this.threadsUrl + id + '/threads')
             .toPromise()
             .then(function (response) {
             return response.json();

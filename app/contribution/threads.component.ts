@@ -18,7 +18,8 @@ export class ThreadsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._contributionService.getThreads().then(threads => {
+    this._userService.getMe().then(me => {
+        this._contributionService.getThreads(me).then(threads => {
             let ret = [];
             for (let thread of threads) {
                 this._userService.getUser(thread.user_id).then(user => {
@@ -29,6 +30,7 @@ export class ThreadsComponent implements OnInit {
                 })
             }
         });
+    });
     }
 
 
