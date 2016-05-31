@@ -4,3 +4,6 @@ a {
   cursor: pointer;
   cursor: hand;
 }
+.mdl-layout__drawer-button {
+  padding-top: 7px;
+}
