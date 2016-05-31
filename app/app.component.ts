@@ -73,6 +73,7 @@ export class AppComponent implements OnInit {
         this.keeper.setToken('');
         setCookie('token', '', 100);
         this.loggedIn = false;
+        this.router.navigate(['Newest']);
     }
 
     closeNav() {
