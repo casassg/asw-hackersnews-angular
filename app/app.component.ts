@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS,  Router } from '@angular/router-deprecated';
 
-import { DashboardComponent }  from './dashboard.component';
-import { HeroesComponent }     from './heroes.component';
-import { HeroDetailComponent } from './hero-detail.component';
 import { UserDetailComponent } from './user/user-detail.component';
 import { MeDetailComponent } from './user/me.component';
-import { HeroService }         from './hero.service';
 import { ContributionService } from './contribution/contribution.service';
 import { ContributionDetailComponent } from './contribution/contribution-detail.component';
 import { NewestComponent } from './contribution/newest.component';
@@ -17,81 +13,74 @@ import { ReplyComponent } from './contribution/reply.component';
 import { setCookie, getCookie }         from './user/cookies.helper';
 import { SubmitComponent } from './contribution/submit.component';
 import { ThreadsComponent } from './contribution/threads.component';
+import { MDL } from './MaterialDesignLiteUpgradeElement'
 
 @Component({
-  selector: 'my-app',
+    selector: 'my-app',
 
-  template: `
-    <h1>{{title}}</h1>
-    <nav>
-      <a [routerLink]="['Newest']">Newest</a>
-      <a [routerLink]="['Asks']">Asks</a>
-      <a *ngIf="loggedIn" [routerLink]="['Threads']">Threads</a>
-      <a [routerLink]="['Submit']">Submit</a>
-      <a *ngIf="loggedIn" [routerLink]="['MeDetail']">Me</a>
-      <a *ngIf="!loggedIn" [href]='login_url'>Login</a>
-      <a *ngIf="loggedIn" (click)='logout()'>Logout</a>
-    </nav>
-    <router-outlet></router-outlet>
-  `,
-  styleUrls: ['app.component.css'],
-  directives: [ROUTER_DIRECTIVES],
-  providers: [
-    ROUTER_PROVIDERS,
-    HeroService,
-    ContributionService,
-    UserService,
-    TokenKeeper,
-  ]
+    templateUrl: 'app.component.html',
+    directives: [ROUTER_DIRECTIVES, MDL],
+    providers: [
+        ROUTER_PROVIDERS,
+        ContributionService,
+        UserService,
+        TokenKeeper,
+    ]
 })
 @RouteConfig([
-  { path: '/user/:id',     name: 'UserDetail',     component: UserDetailComponent },
-  { path: '/me',     name: 'MeDetail',     component: MeDetailComponent},
-  { path: '/contribution/:id', name: 'ContributionDetail', component: ContributionDetailComponent },
-  { path: '/newest', name: 'Newest', component: NewestComponent,  useAsDefault: true },
-  { path: '/asks', name: 'Asks', component: AsksComponent },
-  { path: '/reply/:id', name: 'Reply', component: ReplyComponent },
-  { path: '/submit', name: 'Submit', component: SubmitComponent },
-  { path: '/threads', name: 'Threads', component: ThreadsComponent },
+    {path: '/user/:id', name: 'UserDetail', component: UserDetailComponent},
+    {path: '/me', name: 'MeDetail', component: MeDetailComponent},
+    {path: '/contribution/:id', name: 'ContributionDetail', component: ContributionDetailComponent},
+    {path: '/newest', name: 'Newest', component: NewestComponent, useAsDefault: true},
+    {path: '/asks', name: 'Asks', component: AsksComponent},
+    {path: '/reply/:id', name: 'Reply', component: ReplyComponent},
+    {path: '/submit', name: 'Submit', component: SubmitComponent},
+    {path: '/threads', name: 'Threads', component: ThreadsComponent},
 ])
 
-export class AppComponent  implements OnInit {
-  
+export class AppComponent implements OnInit {
 
-  constructor(private router: Router, private keeper: TokenKeeper, private userServ: UserService) {
-  }
-  title = 'Hackers News';
-  host = window.location.host;
-  login_url = 'http://hackersnews.herokuapp.com/angular?redirect_url=http://'+this.host;
-  loggedIn = false;
 
-  ngOnInit() {
-    let params = getQueryParams(document.location.search);
-    if(params['token']) {
-      setCookie('token',params['token'],100);
-      let token = params['token'];
-      this.keeper.setToken(token);
-    }else {
-      let token = getCookie('token');
-      this.keeper.setToken(token);
+    constructor(private router:Router, private keeper:TokenKeeper, private userServ:UserService) {
     }
 
-    //this.router.navigate(['Dashboard']);
-    this.loggedIn = this.keeper.isLoggedIn();
-    if (this.loggedIn){
-      this.userServ.getMe().then(user=>{
-        this.keeper.registerUser(user);
-      })
-    }
-  }
+    title = 'Hackers News';
+    host = window.location.host;
+    login_url = 'http://hackersnews.herokuapp.com/angular?redirect_url=http://' + this.host;
+    loggedIn = false;
 
-  logout() {
-    this.keeper.setToken('');
-    setCookie('token','',100);
-    this.loggedIn = false;
-  }
+    ngOnInit() {
+        let params = getQueryParams(document.location.search);
+        if (params['token']) {
+            setCookie('token', params['token'], 100);
+            let token = params['token'];
+            this.keeper.setToken(token);
+        } else {
+            let token = getCookie('token');
+            this.keeper.setToken(token);
+        }
+
+        //this.router.navigate(['Dashboard']);
+        this.loggedIn = this.keeper.isLoggedIn();
+        if (this.loggedIn) {
+            this.userServ.getMe().then(user=> {
+                this.keeper.registerUser(user);
+            })
+        }
+    }
+
+    logout() {
+        this.keeper.setToken('');
+        setCookie('token', '', 100);
+        this.loggedIn = false;
+    }
+
+    closeNav() {
+        let layout : any;
+        layout = document.querySelector('.mdl-layout');
+        layout.MaterialLayout.toggleDrawer();
+    }
 }
-
 
 
 function getQueryParams(qs:string) {
@@ -109,9 +98,8 @@ function getQueryParams(qs:string) {
 }
 
 
-
 /*
-Copyright 2016 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/
+ Copyright 2016 Google Inc. All Rights Reserved.
+ Use of this source code is governed by an MIT-style license that
+ can be found in the LICENSE file at http://angular.io/license
+ */

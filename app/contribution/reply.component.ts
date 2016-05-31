@@ -8,7 +8,8 @@ import { UserService } from '../user/user.service'
 @Component({
   selector: 'my-reply',
   templateUrl: 'contribution/reply.component.html',
-  styleUrls: ['contribution/reply.component.css']
+  styleUrls: ['contribution/reply.component.css'],
+  directives: [ROUTER_DIRECTIVES],
 })
 export class ReplyComponent implements OnInit {
   @Input() contribution: Contribution;

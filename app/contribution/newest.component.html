@@ -7,7 +7,7 @@
 	</td>
         <td>
             <a [routerLink]="['ContributionDetail', {'id':contribution.id}]"> {{contribution.title}}</a>
-            <a [href]="contribution.url">({{contribution.url}})</a>
+            <a [href]="contribution.url" target="_blank">({{contribution.url}})</a>
         </td>
     </tr>
     <tr>

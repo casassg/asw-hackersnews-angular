@@ -7,14 +7,14 @@
 			<td class="default">
 				<div style="margin-top:2px; margin-bottom: -10px;">
 					<span class="comhead">
-						<a href="#">{{contribution.title}}</a>
-						<a *ngIf="contribution.contr_subtype == 'url'" href="#">({{contribution.url}})</a>
+						{{contribution.title}}
+						<a *ngIf="contribution.contr_subtype == 'url'" target="_blank" [href]="contribution.url">({{contribution.url}})</a>
 						<!-- Show url if not null-->
 					</span>
 				</div>
-				<p>{{contribution.upvote}} points by 
+				<br><p>{{contribution.upvote}} points by
 				<a  [routerLink]="['UserDetail', {'id':contribution.user_id}]">{{contribution.user_name}}</a> created at
-				<a href="#">{{contribution.created_at}}</a></p>
+				{{contribution.created_at}}</p>
 				<p *ngIf="contribution.contr_subtype == 'text'">{{contribution.content}}</p>
 		</tr>
 		<tr style="height:20px">

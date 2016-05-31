@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { RouteParams } from '@angular/router-deprecated';
+import { RouteParams, Router } from '@angular/router-deprecated';
 
 import { User }        from './user';
 import { UserService } from './user.service';
@@ -15,12 +15,14 @@ export class MeDetailComponent implements OnInit {
 
   constructor(
     private _userService: UserService,
-    private _routeParams: RouteParams) {
+    private _routeParams: RouteParams,
+    private router: Router) {
   }
 
   ngOnInit() {
       this._userService.getMe()
-          .then(user => this.user = user);
+          .then(user => this.user = user)
+          .catch(error => this.router.navigate(['Newest']))
   }
 
   save(updated_user:User){

@@ -37,7 +37,7 @@ export class ThreadsComponent implements OnInit {
                 })
             }
         });
-    });
+    }).catch(error => this.router.navigate(['Newest']));
     }
 
 
